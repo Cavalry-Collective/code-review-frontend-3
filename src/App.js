@@ -1,6 +1,6 @@
 import "antd/dist/antd.css"
 import { useState, useEffect } from "react"
-import { List, Card } from "antd"
+import { List } from "antd"
 import NewToDoForm from "./components/NewToDoForm"
 import ToDoListItem from "./components/ToDoListItem"
 import { useMockFetchToDo } from "./hooks/"
@@ -9,26 +9,7 @@ import {
     errorNotification,
     successNotification,
 } from "./components/notifications"
-
-const appContainerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-}
-
-const divInnerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-}
-
-const cardInnerStyle = {
-    display: "flex",
-    width: "100%",
-    margin: "10px",
-}
+import AppLayout from "./AppLayout"
 
 function App() {
     let [
@@ -92,17 +73,7 @@ function App() {
         />
     )
 
-    return (
-        <div style={appContainerStyle}>
-            <Card style={{ width: "95%", margin: "5px" }}>
-                <div style={divInnerStyle}>
-                    <h1>Things To Do</h1>
-                    <Card style={cardInnerStyle}>{newToDoForm}</Card>
-                    <Card style={{ width: "100%" }}>{toDoList}</Card>
-                </div>
-            </Card>
-        </div>
-    )
+    return <AppLayout {...{ newToDoForm, toDoList }} />
 }
 
 export default App
