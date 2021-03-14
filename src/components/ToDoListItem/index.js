@@ -1,9 +1,10 @@
 import PropTypes from "prop-types"
 import { List, Checkbox } from "antd"
-import EditDeleteButtonGroup from "../EditDeleteButtonGroup"
 import EditView from "../EditView"
+import DeleteToDoButton from "../DeleteToDoButton"
+import EditToDoButton from "../EditToDoButton"
 
-const defaultViewCheckBoxStyle = {
+const defaultViewCheckBoxGroupStyle = {
     display: "flex",
     padding: "5px",
     width: "calc(100vw - 40px)",
@@ -66,39 +67,54 @@ function ToDoListItem({
         removeTrashToolTip()
     }
 
+    const checkBox = (
+        <Checkbox
+            checked={item.completed}
+            onChange={toggleCheckBox}
+            aria-label={item.title}
+            style={{ width: "20px" }}
+        />
+    )
+
+    const toDoTitle = (
+        <button
+            tabIndex="0"
+            style={invisibleButtonStyle}
+            onClick={() => {
+                setEditMode(item.id)
+                removeTrashToolTip()
+            }}
+        >
+            {item.title}
+        </button>
+    )
+
+    const editToDoButton = (
+        <EditToDoButton {...{ setEditMode, removeTrashToolTip, id: item.id }} />
+    )
+
+    const deleteToDoButton = (
+        <DeleteToDoButton
+            {...{
+                isTrashToolTipOpen,
+                removeTrashToolTip,
+                removeItem,
+                setTrashToolTip,
+                removeEditMode,
+                id: item.id,
+            }}
+        />
+    )
+
     const defaultView = (
         <div style={defaultViewDivStyle}>
-            <div style={defaultViewCheckBoxStyle}>
-                <Checkbox
-                    checked={item.completed}
-                    onChange={toggleCheckBox}
-                    aria-label={item.title}
-                    style={{ width: "20px" }}
-                />
-                <button
-                    tabIndex="0"
-                    style={invisibleButtonStyle}
-                    onClick={() => {
-                        setEditMode(item.id)
-                        removeTrashToolTip()
-                    }}
-                >
-                    {item.title}
-                </button>
+            <div style={defaultViewCheckBoxGroupStyle}>
+                {checkBox}
+                {toDoTitle}
             </div>
             <div style={{ display: "flex", width: "100px" }}>
-                <EditDeleteButtonGroup
-                    {...{
-                        item,
-                        toggleCheckBox,
-                        removeItem,
-                        removeEditMode,
-                        setEditMode,
-                        removeTrashToolTip,
-                        setTrashToolTip,
-                        isTrashToolTipOpen,
-                    }}
-                />
+                {editToDoButton}
+                {deleteToDoButton}
             </div>
         </div>
     )
