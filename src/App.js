@@ -66,7 +66,7 @@ function App() {
                 flexDirection: "column",
             }}
         >
-            <Card style={{ width: "100%", margin: "20px" }}>
+            <Card style={{ width: "90%", margin: "10px" }}>
                 <div
                     style={{
                         display: "flex",

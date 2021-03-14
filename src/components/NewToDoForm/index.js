@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Button, Input, Tooltip, Form, AutoComplete } from "antd"
 
-function NewToDoForm({ addItem }) {
+function NewToDoForm({ addItem, setEditForm }) {
     const [incompleteValue, setIncompleteValue] = useState("")
 
     const onSubmit = () => {
@@ -20,7 +20,7 @@ function NewToDoForm({ addItem }) {
             style={{
                 display: "flex",
                 margin: "10px",
-                width: "100%",
+                width: "calc(80vw - 60px)",
                 justifyContent: "center",
                 alignItems: "center",
             }}
