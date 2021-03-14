@@ -1,5 +1,6 @@
 import "antd/dist/antd.css"
 import "./App.css"
+import { useState } from "react"
 import { List, Card } from "antd"
 import NewToDoForm from "./components/NewToDoForm"
 import ToDoListItem from "./components/ToDoListItem"
@@ -32,9 +33,15 @@ let data = [
     },
 ]
 
-const listItemRenderFunction = item => <ToDoListItem item={item} />
-
 function App() {
+    let [todoItems, setToDoItems] = useState(data)
+
+    const addItem = item => {
+        setToDoItems([...todoItems, item])
+    }
+
+    const listItemRenderFunction = item => <ToDoListItem item={item} />
+
     return (
         <div
             className="App"
@@ -56,13 +63,13 @@ function App() {
                 >
                     <h1>Things to do!</h1>
                     <Card style={{ display: "flex", width: "100%" }}>
-                        <NewToDoForm />
+                        <NewToDoForm addItem={addItem} />
                     </Card>
                     <Card style={{ width: "100%", margin: "10px" }}>
                         <List
                             size="large"
                             style={{ width: "300px", margin: "10px" }}
-                            dataSource={data}
+                            dataSource={todoItems}
                             renderItem={item => listItemRenderFunction(item)}
                         />
                     </Card>
