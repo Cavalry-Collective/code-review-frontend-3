@@ -18,14 +18,9 @@ EditDeleteButtonGroup.propTypes = {
 
 function EditDeleteButtonGroup({ item, removeItem, setEditMode }) {
     const [visible, setVisible] = useState(false)
-    const [confirmLoading, setConfirmLoading] = useState(false)
 
     const handleOk = () => {
-        setConfirmLoading(true)
-        setTimeout(() => {
-            setVisible(false)
-            setConfirmLoading(false)
-        }, 2000)
+        setVisible(false)
 
         removeItem(item.id)
     }
@@ -43,7 +38,6 @@ function EditDeleteButtonGroup({ item, removeItem, setEditMode }) {
                 title="Are you sure you want to delete this item?"
                 visible={visible}
                 onConfirm={handleOk}
-                okButtonProps={{ loading: confirmLoading }}
                 onCancel={() => setVisible(false)}
             >
                 <Button
