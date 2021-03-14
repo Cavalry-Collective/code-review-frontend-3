@@ -39,6 +39,32 @@ const itemShape = PropTypes.shape({
     completed: PropTypes.bool.isRequired,
 })
 
+ToDoItemLayout.propTypes = {
+    checkBox: PropTypes.element.isRequired,
+    clickableToDoTitle: PropTypes.element.isRequired,
+    editToDoButton: PropTypes.element.isRequired,
+    deleteToDoButton: PropTypes.element.isRequired,
+}
+
+function ToDoItemLayout({
+    checkBox,
+    clickableToDoTitle,
+    editToDoButton,
+    deleteToDoButton,
+}) {
+    return (
+        <div style={defaultViewDivStyle}>
+            <div style={defaultViewCheckBoxGroupStyle}>
+                {checkBox}
+                {clickableToDoTitle}
+            </div>
+            <div style={{ display: "flex", width: "100px" }}>
+                {editToDoButton}
+                {deleteToDoButton}
+            </div>
+        </div>
+    )
+}
 ToDoListItem.propTypes = {
     item: itemShape.isRequired,
     updateItem: PropTypes.func.isRequired,
@@ -76,7 +102,7 @@ function ToDoListItem({
         />
     )
 
-    const toDoTitle = (
+    const clickableToDoTitle = (
         <button
             tabIndex="0"
             style={invisibleButtonStyle}
@@ -107,16 +133,14 @@ function ToDoListItem({
     )
 
     const defaultView = (
-        <div style={defaultViewDivStyle}>
-            <div style={defaultViewCheckBoxGroupStyle}>
-                {checkBox}
-                {toDoTitle}
-            </div>
-            <div style={{ display: "flex", width: "100px" }}>
-                {editToDoButton}
-                {deleteToDoButton}
-            </div>
-        </div>
+        <ToDoItemLayout
+            {...{
+                checkBox,
+                clickableToDoTitle,
+                editToDoButton,
+                deleteToDoButton,
+            }}
+        />
     )
 
     const editView = <EditView {...{ item, updateItem, removeEditMode }} />
