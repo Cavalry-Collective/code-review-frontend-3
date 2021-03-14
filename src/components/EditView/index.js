@@ -1,17 +1,7 @@
 import { useState } from "react"
 import PropTypes from "prop-types"
 import { Button, Tooltip, Input } from "antd"
-
-const totallyCenteredStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-}
-const editViewContainerStyle = {
-    ...totallyCenteredStyle,
-    width: "100%",
-    flexWrap: "wrap",
-}
+import EditViewLayout from "../EditViewLayout"
 
 const itemShape = PropTypes.shape({
     title: PropTypes.string.isRequired,
@@ -77,15 +67,7 @@ function EditView({ item, updateItem, removeEditMode }) {
         </Tooltip>
     )
 
-    return (
-        <div style={editViewContainerStyle}>
-            <div style={{ flex: 1, minWidth: "175px" }}>{editInput}</div>
-            <div style={totallyCenteredStyle}>
-                {saveButton}
-                {cancelButton}
-            </div>
-        </div>
-    )
+    return <EditViewLayout {...{ editInput, saveButton, cancelButton }} />
 }
 
 export default EditView
