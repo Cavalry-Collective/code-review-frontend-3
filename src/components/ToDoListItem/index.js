@@ -3,25 +3,11 @@ import { List, Checkbox } from "antd"
 import EditView from "../EditView"
 import DeleteToDoButton from "../DeleteToDoButton"
 import EditToDoButton from "../EditToDoButton"
-
-const defaultViewCheckBoxGroupStyle = {
-    display: "flex",
-    padding: "5px",
-    width: "calc(100vw - 40px)",
-    alignItems: "center",
-    overflow: "hidden",
-}
-
-const defaultViewDivStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
-}
+import ToDoItemLayout from "../ToDoItemLayout"
 
 const listItemStyle = {
     listStyleType: "none",
-    padding: "10px 0px",
+    padding: "5px 0px",
 }
 
 const invisibleButtonStyle = {
@@ -39,32 +25,6 @@ const itemShape = PropTypes.shape({
     completed: PropTypes.bool.isRequired,
 })
 
-ToDoItemLayout.propTypes = {
-    checkBox: PropTypes.element.isRequired,
-    clickableToDoTitle: PropTypes.element.isRequired,
-    editToDoButton: PropTypes.element.isRequired,
-    deleteToDoButton: PropTypes.element.isRequired,
-}
-
-function ToDoItemLayout({
-    checkBox,
-    clickableToDoTitle,
-    editToDoButton,
-    deleteToDoButton,
-}) {
-    return (
-        <div style={defaultViewDivStyle}>
-            <div style={defaultViewCheckBoxGroupStyle}>
-                {checkBox}
-                {clickableToDoTitle}
-            </div>
-            <div style={{ display: "flex", width: "100px" }}>
-                {editToDoButton}
-                {deleteToDoButton}
-            </div>
-        </div>
-    )
-}
 ToDoListItem.propTypes = {
     item: itemShape.isRequired,
     updateItem: PropTypes.func.isRequired,
@@ -104,7 +64,6 @@ function ToDoListItem({
 
     const clickableToDoTitle = (
         <button
-            tabIndex="0"
             style={invisibleButtonStyle}
             onClick={() => {
                 setEditMode(item.id)
