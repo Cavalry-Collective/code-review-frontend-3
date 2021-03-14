@@ -6,7 +6,8 @@ import EditView from "../EditView"
 const defaultViewCheckBoxStyle = {
     display: "flex",
     padding: "5px",
-    width: "calc(100vw - 50px)",
+    width: "calc(100vw - 40px)",
+    alignItems: "center",
     overflow: "hidden",
 }
 
@@ -20,6 +21,15 @@ const defaultViewDivStyle = {
 const listItemStyle = {
     listStyleType: "none",
     padding: "10px 0px",
+}
+
+const invisibleButtonStyle = {
+    padding: "5px 15px",
+    margin: "0px 10px",
+    width: "calc(100% - 20px)",
+    textAlign: "left",
+    background: "white",
+    border: "1px dotted rgba(200, 200,200, 0.5)",
 }
 
 const itemShape = PropTypes.shape({
@@ -51,18 +61,30 @@ function ToDoListItem({
     setTrashToolTip,
     isTrashToolTipOpen,
 }) {
-    const toggleCheckBox = () =>
+    const toggleCheckBox = () => {
         updateItem({ ...item, completed: !item.completed })
+        removeTrashToolTip()
+    }
 
     const defaultView = (
         <div style={defaultViewDivStyle}>
-            <div
-                style={defaultViewCheckBoxStyle}
-                onClick={() => setEditMode(item.id)}
-            >
-                <Checkbox checked={item.completed} onChange={toggleCheckBox}>
+            <div style={defaultViewCheckBoxStyle}>
+                <Checkbox
+                    checked={item.completed}
+                    onChange={toggleCheckBox}
+                    aria-label={item.title}
+                    style={{ width: "20px" }}
+                />
+                <button
+                    tabIndex="0"
+                    style={invisibleButtonStyle}
+                    onClick={() => {
+                        setEditMode(item.id)
+                        removeTrashToolTip()
+                    }}
+                >
                     {item.title}
-                </Checkbox>
+                </button>
             </div>
             <div style={{ display: "flex", width: "100px" }}>
                 <EditDeleteButtonGroup
