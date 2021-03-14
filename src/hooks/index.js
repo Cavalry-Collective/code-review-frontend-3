@@ -1,35 +1,7 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 
-const DELAY = 5000
-const SUCCESS_RATE = 0.9
-
-let data = [
-    {
-        id: "1615663714830",
-        title: "Eat breakfast",
-        completed: false,
-    },
-    {
-        id: "1615663714831",
-        title: "Do laundry",
-        completed: true,
-    },
-    {
-        id: "1615663714832",
-        title: "Take out the trash",
-        completed: false,
-    },
-    {
-        id: "1615663714833",
-        title: "Write a blog post",
-        completed: true,
-    },
-    {
-        id: "1615663714834",
-        title: "Go out for a walk",
-        completed: false,
-    },
-]
+const DELAY = 200
+const SUCCESS_RATE = 0.8
 
 // from KCD's implementation https://github.com/kentcdodds/react-hooks/blob/main/src/final/02.extra-4.js
 function useLocalStorageState(
@@ -88,23 +60,23 @@ const INITIAL_STATUS = {
 }
 
 function useMockFetchToDo() {
-    const [toDoItems, setToDoItems] = useLocalStorageState(
-        "toDoList",
-        () => data
-    )
+    const [toDoItems, setToDoItems] = useLocalStorageState("toDoList", [])
     const [status, setStatus] = useState(INITIAL_STATUS)
 
     useEffect(() => {
         if (status.statusType !== statusTypes.loading) {
             return
         }
+
         const timer = setTimeout(() => {
-            if (Math.random() > SUCCESS_RATE) {
+            const willReject = Math.random() > SUCCESS_RATE
+            const percent = Math.round((1.0 - SUCCESS_RATE) * 100)
+            if (willReject) {
+                const errorMessage = `Mock Server randomly rejects ${percent}% of the time`
                 setStatus({
                     ...status,
                     statusType: statusTypes.error,
-                    errorMessage:
-                        "Mock Server randomly rejected 10% of the time",
+                    errorMessage,
                 })
                 return
             }
@@ -146,46 +118,53 @@ function useMockFetchToDo() {
         })
     }
 
-    const addItem = item => {
-        setStatus({
-            errorMessage: null,
-            statusType: statusTypes.loading,
-            action: actionTypes.add,
-            payLoad: { item },
-        })
-    }
+    const addItem = useCallback(
+        item => {
+            setStatus({
+                errorMessage: null,
+                statusType: statusTypes.loading,
+                action: actionTypes.add,
+                payLoad: { item },
+            })
+        },
+        [setStatus]
+    )
 
-    const updateItem = item => {
-        setStatus({
-            errorMessage: null,
-            statusType: statusTypes.loading,
-            action: actionTypes.update,
-            payLoad: { item },
-        })
-    }
+    const updateItem = useCallback(
+        item => {
+            setStatus({
+                errorMessage: null,
+                statusType: statusTypes.loading,
+                action: actionTypes.update,
+                payLoad: { item },
+            })
+        },
+        [setStatus]
+    )
 
-    const retry = () => {
+    const retry = useCallback(() => {
         setStatus({
             ...status,
             statusType: statusTypes.loading,
             errorMessage: null,
         })
-    }
+    }, [status, setStatus])
 
-    const reset = () => {
+    const reset = useCallback(() => {
         setStatus(INITIAL_STATUS)
-    }
+    }, [setStatus])
 
-    const { statusType, error } = status
+    const { statusType, errorMessage } = status
     return [
         toDoItems,
         { updateItem, addItem, removeItem, reset, retry },
         {
             isLoading: statusType === statusTypes.loading,
             isSuccess: statusType === statusTypes.success,
-            isError: statusType === statusType.error,
-            isIdle: statusType === statusType.idle,
-            error: error,
+            isError: statusType === statusTypes.error,
+            isIdle: statusType === statusTypes.idle,
+            errorMessage: errorMessage,
+            statusType,
         },
     ]
 }
