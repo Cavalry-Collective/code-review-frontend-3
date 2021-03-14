@@ -33,6 +33,26 @@ let data = [
     },
 ]
 
+const appContainerStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+}
+
+const divInnerStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+}
+
+const cardInnerStyle = {
+    display: "flex",
+    width: "100%",
+    margin: "10px",
+}
+
 function App() {
     let [toDoItems, setToDoItems] = useState(data)
     let [currentEditModeItemId, setCurrentEditModeItemId] = useState(null)
@@ -66,32 +86,11 @@ function App() {
     )
 
     return (
-        <div
-            className="App"
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column",
-            }}
-        >
+        <div className="App" style={appContainerStyle}>
             <Card style={{ width: "90%", margin: "10px" }}>
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexDirection: "column",
-                    }}
-                >
+                <div style={divInnerStyle}>
                     <h1>Things to do!</h1>
-                    <Card
-                        style={{
-                            display: "flex",
-                            width: "100%",
-                            margin: "10px",
-                        }}
-                    >
+                    <Card style={cardInnerStyle}>
                         <NewToDoForm
                             addItem={addItem}
                             removeEditMode={removeEditMode}
