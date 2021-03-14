@@ -1,9 +1,14 @@
 import "antd/dist/antd.css"
-import { useState } from "react"
-import { List, Card, Button } from "antd"
+import { useState, useEffect } from "react"
+import { List, Card } from "antd"
 import NewToDoForm from "./components/NewToDoForm"
 import ToDoListItem from "./components/ToDoListItem"
 import { useMockFetchToDo } from "./hooks/"
+import {
+    loadingNotification,
+    errorNotification,
+    successNotification,
+} from "./components/notifications"
 
 const appContainerStyle = {
     display: "flex",
@@ -34,6 +39,16 @@ function App() {
     let [currentEditModeItemId, setCurrentEditModeItemId] = useState(null)
     let [currentTrashToolTipOpen, setCurrentTrashToolTipOpen] = useState(null)
 
+    useEffect(() => {
+        if (isLoading) {
+            loadingNotification()
+        } else if (isError) {
+            errorNotification(reset, retry, errorMessage)
+        } else if (isSuccess) {
+            successNotification(reset)
+        }
+    }, [isLoading, isError, isSuccess, errorMessage, isIdle, reset, retry])
+
     const updateItem = updatedItem => {
         serverUpdateItem(updatedItem)
         setCurrentEditModeItemId(null)
@@ -61,37 +76,16 @@ function App() {
         )
     }
 
-    let message = null
-    if (isLoading) {
-        message = "Syncing server... please wait!"
-    } else if (isError) {
-        message = (
-            <span>
-                `Something went wrong (error: {errorMessage})`
-                <Button onClick={retry}>Try again</Button> or{" "}
-                <Button onClick={reset}>Reset</Button>
-            </span>
-        )
-    } else if (isSuccess) {
-        message = (
-            <span>
-                Request Successful! <Button onClick={reset}>Ok!</Button>
-            </span>
-        )
-    } else if (isIdle) {
-        message = <span>:)</span>
-    }
-
     return (
         <div style={appContainerStyle}>
             <Card style={{ width: "95%", margin: "5px" }}>
                 <div style={divInnerStyle}>
-                    <h1>Things to do!</h1>
-                    {message}
+                    <h1>Things To Do</h1>
                     <Card style={cardInnerStyle}>
                         <NewToDoForm
                             addItem={addItem}
                             removeEditMode={removeEditMode}
+                            removeTrashToolTip={removeTrashToolTip}
                         />
                     </Card>
                     <Card style={{ width: "100%" }}>
