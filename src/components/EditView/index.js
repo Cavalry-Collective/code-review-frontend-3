@@ -2,33 +2,15 @@ import { useState } from "react"
 import PropTypes from "prop-types"
 import { Button, Tooltip, Input } from "antd"
 
-const editViewContainerStyle = {
-    display: "flex",
-    margin: "10px",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    flexWrap: "wrap",
-}
-
 const totallyCenteredStyle = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
 }
-
-const saveButtonStyle = {
-    margin: "10px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-}
-
-const cancelButtonStyle = {
-    margin: "10px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+const editViewContainerStyle = {
+    ...totallyCenteredStyle,
+    width: "100%",
+    flexWrap: "wrap",
 }
 
 const itemShape = PropTypes.shape({
@@ -80,7 +62,7 @@ function EditView({ item, updateItem, removeEditMode }) {
         <Tooltip title={saveToolTipText}>
             <Button
                 type="primary"
-                style={saveButtonStyle}
+                style={{ margin: "10px" }}
                 onClick={onSubmit}
                 disabled={disableSubmit}
             >
@@ -91,9 +73,7 @@ function EditView({ item, updateItem, removeEditMode }) {
 
     const cancelButton = (
         <Tooltip title={cancelToolTipText}>
-            <Button style={cancelButtonStyle} onClick={removeEditMode}>
-                Cancel
-            </Button>
+            <Button onClick={removeEditMode}>Cancel</Button>
         </Tooltip>
     )
 
