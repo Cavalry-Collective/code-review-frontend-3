@@ -1,4 +1,3 @@
-import { useState } from "react"
 import PropTypes from "prop-types"
 import { Button, Popconfirm, Tooltip } from "antd"
 import { DeleteFilled, EditFilled } from "@ant-design/icons"
@@ -10,19 +9,31 @@ const itemShape = PropTypes.shape({
 
 EditDeleteButtonGroup.propTypes = {
     item: itemShape.isRequired,
-    updateItem: PropTypes.func.isRequired,
-    removeEditMode: PropTypes.func.isRequired,
     removeItem: PropTypes.func.isRequired,
     setEditMode: PropTypes.func.isRequired,
+    removeEditMode: PropTypes.func.isRequired,
+    removeTrashToolTip: PropTypes.func.isRequired,
+    setTrashToolTip: PropTypes.func.isRequired,
+    isTrashToolTipOpen: PropTypes.bool.isRequired,
 }
 
-function EditDeleteButtonGroup({ item, removeItem, setEditMode }) {
-    const [visible, setVisible] = useState(false)
-
+function EditDeleteButtonGroup({
+    item,
+    removeItem,
+    setEditMode,
+    removeEditMode,
+    removeTrashToolTip,
+    setTrashToolTip,
+    isTrashToolTipOpen,
+}) {
     const handleOk = () => {
-        setVisible(false)
-
+        removeTrashToolTip()
         removeItem(item.id)
+    }
+
+    const handleTrashClick = () => {
+        setTrashToolTip(item.id)
+        removeEditMode()
     }
 
     return (
@@ -36,15 +47,15 @@ function EditDeleteButtonGroup({ item, removeItem, setEditMode }) {
             </Tooltip>
             <Popconfirm
                 title="Are you sure you want to delete this item?"
-                visible={visible}
+                visible={isTrashToolTipOpen}
                 onConfirm={handleOk}
-                onCancel={() => setVisible(false)}
+                onCancel={() => removeTrashToolTip()}
             >
                 <Button
                     danger
                     icon={<DeleteFilled />}
                     style={{ margin: "5px" }}
-                    onClick={() => setVisible(true)}
+                    onClick={handleTrashClick}
                 />
             </Popconfirm>
         </>

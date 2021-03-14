@@ -35,6 +35,9 @@ ToDoListItem.propTypes = {
     removeItem: PropTypes.func.isRequired,
     setEditMode: PropTypes.func.isRequired,
     isEditMode: PropTypes.bool.isRequired,
+    removeTrashToolTip: PropTypes.func.isRequired,
+    setTrashToolTip: PropTypes.func.isRequired,
+    isTrashToolTipOpen: PropTypes.bool.isRequired,
 }
 
 function ToDoListItem({
@@ -44,6 +47,9 @@ function ToDoListItem({
     isEditMode,
     removeEditMode,
     setEditMode,
+    removeTrashToolTip,
+    setTrashToolTip,
+    isTrashToolTipOpen,
 }) {
     const toggleCheckBox = () =>
         updateItem({ ...item, completed: !item.completed })
@@ -63,10 +69,12 @@ function ToDoListItem({
                     {...{
                         item,
                         toggleCheckBox,
-                        updateItem,
                         removeItem,
                         removeEditMode,
                         setEditMode,
+                        removeTrashToolTip,
+                        setTrashToolTip,
+                        isTrashToolTipOpen,
                     }}
                 />
             </div>

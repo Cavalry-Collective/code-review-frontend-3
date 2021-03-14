@@ -28,6 +28,7 @@ const cardInnerStyle = {
 function App() {
     let [toDoItems, setToDoItems] = useMockFetchToDo()
     let [currentEditModeItemId, setCurrentEditModeItemId] = useState(null)
+    let [currentTrashToolTipOpen, setCurrentTrashToolTipOpen] = useState(null)
 
     const removeItem = itemId =>
         setToDoItems(toDoItems.filter(item => item.id !== itemId))
@@ -36,6 +37,9 @@ function App() {
 
     const removeEditMode = () => setCurrentEditModeItemId(null)
     const setEditMode = id => setCurrentEditModeItemId(id)
+
+    const removeTrashToolTip = () => setCurrentTrashToolTipOpen(null)
+    const setTrashToolTip = id => setCurrentTrashToolTipOpen(id)
 
     const updateItem = updatedItem => {
         setToDoItems(
@@ -54,12 +58,15 @@ function App() {
             updateItem={updateItem}
             removeEditMode={removeEditMode}
             setEditMode={setEditMode}
+            removeTrashToolTip={removeTrashToolTip}
+            setTrashToolTip={setTrashToolTip}
+            isTrashTooTipOpen={currentTrashToolTipOpen === item.id}
         />
     )
 
     return (
         <div style={appContainerStyle}>
-            <Card style={{ width: "90%", margin: "10px" }}>
+            <Card style={{ width: "95%", margin: "5px" }}>
                 <div style={divInnerStyle}>
                     <h1>Things to do!</h1>
                     <Card style={cardInnerStyle}>
