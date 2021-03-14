@@ -34,15 +34,26 @@ let data = [
 ]
 
 function App() {
-    let [todoItems, setToDoItems] = useState(data)
+    let [toDoItems, setToDoItems] = useState(data)
 
     const removeItem = itemId =>
-        setToDoItems(todoItems.filter(item => item.id !== itemId))
+        setToDoItems(toDoItems.filter(item => item.id !== itemId))
 
-    const addItem = item => setToDoItems([...todoItems, item])
+    const addItem = item => setToDoItems([...toDoItems, item])
+
+    const updateItem = updatedItem =>
+        setToDoItems(
+            toDoItems.map(item => {
+                return item.id === updatedItem.id ? updatedItem : item
+            })
+        )
 
     const listItemRenderFunction = item => (
-        <ToDoListItem item={item} removeItem={removeItem} />
+        <ToDoListItem
+            item={item}
+            removeItem={removeItem}
+            updateItem={updateItem}
+        />
     )
 
     return (
@@ -72,7 +83,7 @@ function App() {
                         <List
                             size="large"
                             style={{ width: "300px", margin: "10px" }}
-                            dataSource={todoItems}
+                            dataSource={toDoItems}
                             renderItem={item => listItemRenderFunction(item)}
                         />
                     </Card>

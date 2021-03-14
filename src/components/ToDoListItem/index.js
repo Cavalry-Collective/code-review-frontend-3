@@ -2,7 +2,7 @@ import { useState } from "react"
 import { List, Checkbox, Button, Popconfirm, Tooltip } from "antd"
 import { DeleteFilled, EditFilled } from "@ant-design/icons"
 
-function ToDoListItem({ item, removeItem }) {
+function ToDoListItem({ item, removeItem, updateItem }) {
     const [visible, setVisible] = useState(false)
     const [confirmLoading, setConfirmLoading] = useState(false)
 
@@ -24,6 +24,10 @@ function ToDoListItem({ item, removeItem }) {
         setVisible(false)
     }
 
+    const toggleCheckBox = () => {
+        updateItem({ ...item, completed: !item.completed })
+    }
+
     return (
         <List.Item
             style={{
@@ -34,7 +38,7 @@ function ToDoListItem({ item, removeItem }) {
             }}
         >
             <div style={{ display: "flex" }}>
-                <Checkbox checked={item.completed}>
+                <Checkbox checked={item.completed} onChange={toggleCheckBox}>
                     <span style={{ padding: "10px" }}>{item.title}</span>
                 </Checkbox>
             </div>
