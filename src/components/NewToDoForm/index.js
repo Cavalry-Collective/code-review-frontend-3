@@ -16,18 +16,29 @@ function NewToDoForm({ addItem }) {
     const disableSubmit = incompleteValue === ""
 
     return (
-        <div style={{ display: "flex", margin: "10px", width: "100%" }}>
-            <Input
-                rules={[{ required: true, message: "This field is required" }]}
-                placeholder="What do you need to do?"
-                size="large"
-                onChange={e => {
-                    setIncompleteValue(e.target.value)
-                }}
-                onPressEnter={onSubmit}
-                value={incompleteValue}
-            />
-
+        <div
+            style={{
+                display: "flex",
+                margin: "10px",
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <div style={{ flex: 1 }}>
+                <Input
+                    rules={[
+                        { required: true, message: "This field is required" },
+                    ]}
+                    placeholder="What do you need to do?"
+                    size="large"
+                    onChange={e => {
+                        setIncompleteValue(e.target.value)
+                    }}
+                    onPressEnter={onSubmit}
+                    value={incompleteValue}
+                />
+            </div>
             <div
                 style={{
                     display: "flex",
