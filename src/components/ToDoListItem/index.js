@@ -17,7 +17,7 @@ function ToDoListItem({ item, removeItem }) {
             setConfirmLoading(false)
         }, 2000)
 
-        removeItem(item)
+        removeItem(item.id)
     }
 
     const handleCancel = () => {
