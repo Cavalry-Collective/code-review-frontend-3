@@ -27,7 +27,7 @@ const successNotification = reset => {
         message: "Request Successful!",
         btn,
         key,
-        duration: 3,
+        duration: 2.5,
     })
 }
 
