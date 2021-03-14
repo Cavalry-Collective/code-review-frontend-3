@@ -76,26 +76,29 @@ function App() {
         )
     }
 
+    const newToDoForm = (
+        <NewToDoForm
+            addItem={addItem}
+            removeEditMode={removeEditMode}
+            removeTrashToolTip={removeTrashToolTip}
+        />
+    )
+    const toDoList = (
+        <List
+            size="large"
+            style={{ width: "100%" }}
+            dataSource={toDoItems}
+            renderItem={item => listItemRenderFunction(item)}
+        />
+    )
+
     return (
         <div style={appContainerStyle}>
             <Card style={{ width: "95%", margin: "5px" }}>
                 <div style={divInnerStyle}>
                     <h1>Things To Do</h1>
-                    <Card style={cardInnerStyle}>
-                        <NewToDoForm
-                            addItem={addItem}
-                            removeEditMode={removeEditMode}
-                            removeTrashToolTip={removeTrashToolTip}
-                        />
-                    </Card>
-                    <Card style={{ width: "100%" }}>
-                        <List
-                            size="large"
-                            style={{ width: "100%" }}
-                            dataSource={toDoItems}
-                            renderItem={item => listItemRenderFunction(item)}
-                        />
-                    </Card>
+                    <Card style={cardInnerStyle}>{newToDoForm}</Card>
+                    <Card style={{ width: "100%" }}>{toDoList}</Card>
                 </div>
             </Card>
         </div>
