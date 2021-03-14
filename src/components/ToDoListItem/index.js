@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import { List, Checkbox } from "antd"
 import EditDeleteButtonGroup from "../EditDeleteButtonGroup"
 import EditView from "../EditView"
@@ -12,6 +13,21 @@ const listItemStyle = {
     listStyleType: "none",
     display: "flex",
     justifyContent: "space-between",
+}
+
+const itemShape = PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    completed: PropTypes.bool.isRequired,
+})
+
+ToDoListItem.propTypes = {
+    item: itemShape.isRequired,
+    updateItem: PropTypes.func.isRequired,
+    removeEditMode: PropTypes.func.isRequired,
+    removeItem: PropTypes.func.isRequired,
+    setEditMode: PropTypes.func.isRequired,
+    isEditMode: PropTypes.bool.isRequired,
 }
 
 function ToDoListItem({

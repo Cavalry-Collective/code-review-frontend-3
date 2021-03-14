@@ -1,6 +1,20 @@
 import { useState } from "react"
+import PropTypes from "prop-types"
 import { Button, Popconfirm, Tooltip } from "antd"
 import { DeleteFilled, EditFilled } from "@ant-design/icons"
+
+const itemShape = PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+})
+
+EditDeleteButtonGroup.propTypes = {
+    item: itemShape.isRequired,
+    updateItem: PropTypes.func.isRequired,
+    removeEditMode: PropTypes.func.isRequired,
+    removeItem: PropTypes.func.isRequired,
+    setEditMode: PropTypes.func.isRequired,
+}
 
 function EditDeleteButtonGroup({ item, removeItem, setEditMode }) {
     const [visible, setVisible] = useState(false)

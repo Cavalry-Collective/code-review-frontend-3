@@ -1,4 +1,5 @@
 import { useState } from "react"
+import PropTypes from "prop-types"
 import { Button, Tooltip, Input } from "antd"
 
 const editViewContainerStyle = {
@@ -27,6 +28,18 @@ const cancelButtonStyle = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+}
+
+const itemShape = PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    completed: PropTypes.bool.isRequired,
+})
+
+EditView.propTypes = {
+    item: itemShape.isRequired,
+    updateItem: PropTypes.func.isRequired,
+    removeEditMode: PropTypes.func.isRequired,
 }
 
 function EditView({ item, updateItem, removeEditMode }) {

@@ -1,5 +1,6 @@
 import { useState } from "react"
-import { Button, Input, Tooltip, Form, AutoComplete } from "antd"
+import PropTypes from "prop-types"
+import { Button, Input, Tooltip } from "antd"
 
 const newToDoContainerStyle = {
     display: "flex",
@@ -20,6 +21,11 @@ const buttonContainerStyle = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+}
+
+NewToDoForm.propTypes = {
+    addItem: PropTypes.func.isRequired,
+    removeEditMode: PropTypes.func.isRequired,
 }
 
 function NewToDoForm({ addItem, removeEditMode }) {
