@@ -3,16 +3,22 @@ import { List, Checkbox } from "antd"
 import EditDeleteButtonGroup from "../EditDeleteButtonGroup"
 import EditView from "../EditView"
 
+const defaultViewCheckBoxStyle = {
+    display: "flex",
+    padding: "5px",
+    width: "calc(100vw - 50px)",
+}
+
 const defaultViewDivStyle = {
     display: "flex",
-    padding: "20px",
-    width: "calc(100vw - 100px)",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
 }
 
 const listItemStyle = {
     listStyleType: "none",
-    display: "flex",
-    justifyContent: "space-between",
+    padding: "10px 0px",
 }
 
 const itemShape = PropTypes.shape({
@@ -42,13 +48,13 @@ function ToDoListItem({
         updateItem({ ...item, completed: !item.completed })
 
     const defaultView = (
-        <>
+        <div style={defaultViewDivStyle}>
             <div
-                style={defaultViewDivStyle}
+                style={defaultViewCheckBoxStyle}
                 onClick={() => setEditMode(item.id)}
             >
                 <Checkbox checked={item.completed} onChange={toggleCheckBox}>
-                    <spa>{item.title}</spa>
+                    <span>{item.title}</span>
                 </Checkbox>
             </div>
             <div style={{ display: "flex", width: "100px" }}>
@@ -63,7 +69,7 @@ function ToDoListItem({
                     }}
                 />
             </div>
-        </>
+        </div>
     )
 
     const editView = <EditView {...{ item, updateItem, removeEditMode }} />

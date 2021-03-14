@@ -8,6 +8,7 @@ const editViewContainerStyle = {
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
+    flexWrap: "wrap",
 }
 
 const totallyCenteredStyle = {
@@ -64,7 +65,7 @@ function EditView({ item, updateItem, removeEditMode }) {
 
     return (
         <div style={editViewContainerStyle}>
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, minWidth: "175px" }}>
                 <Input
                     rules={[{ required: true, message: "Required" }]}
                     placeholder={item.title}
