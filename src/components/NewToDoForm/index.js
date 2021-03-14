@@ -3,13 +3,6 @@ import PropTypes from "prop-types"
 import { Button, Input, Tooltip } from "antd"
 import NewToDoLayout from "../NewToDoLayout"
 
-const buttonStyle = {
-    margin: "10px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-}
-
 NewToDoForm.propTypes = {
     addItem: PropTypes.func.isRequired,
     removeEditMode: PropTypes.func.isRequired,
@@ -59,7 +52,7 @@ function NewToDoForm({ addItem, removeEditMode, removeTrashToolTip }) {
         <Tooltip title={toolTipText}>
             <Button
                 type="primary"
-                style={buttonStyle}
+                style={{ margin: "5px" }}
                 onClick={onSubmit}
                 disabled={disableSubmit}
             >

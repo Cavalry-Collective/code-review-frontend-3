@@ -62,14 +62,13 @@ function ToDoListItem({
         />
     )
 
+    const onClickTitle = () => {
+        setEditMode(item.id)
+        removeTrashToolTip()
+    }
+
     const clickableToDoTitle = (
-        <button
-            style={invisibleButtonStyle}
-            onClick={() => {
-                setEditMode(item.id)
-                removeTrashToolTip()
-            }}
-        >
+        <button style={invisibleButtonStyle} onClick={onClickTitle}>
             {item.title}
         </button>
     )

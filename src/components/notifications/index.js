@@ -11,15 +11,14 @@ function Spinner() {
 
 const successNotification = reset => {
     const key = `open${Date.now()}`
+
+    const onClose = () => {
+        reset()
+        notification.close(key)
+    }
+
     const btn = (
-        <Button
-            type="primary"
-            size="small"
-            onClick={() => {
-                reset()
-                notification.close(key)
-            }}
-        >
+        <Button type="primary" size="small" onClick={onClose}>
             Ok
         </Button>
     )
@@ -42,34 +41,37 @@ const loadingNotification = () => {
 const errorNotification = (reset, retry, errorMessage) => {
     const key = `open${Date.now()}`
 
+    const onTryAgain = () => {
+        retry()
+        notification.close(key)
+    }
+
+    const onNeverMind = () => {
+        reset()
+        notification.close(key)
+    }
+
+    const tryAgainButton = (
+        <Button type="primary" onClick={onTryAgain}>
+            Try again
+        </Button>
+    )
+
+    const neverMindButton = <Button onClick={onNeverMind}>Never Mind.</Button>
+
     notification.error({
         key,
         duration: null,
         message: "Something went wrong.",
         description: (
-            <div>
+            <>
                 We were not able to save your action.
                 <div style={{ margin: "10px" }}>
-                    <Button
-                        type="primary"
-                        onClick={() => {
-                            retry()
-                            notification.close(key)
-                        }}
-                    >
-                        Try again
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            reset()
-                            notification.close(key)
-                        }}
-                    >
-                        Never Mind.
-                    </Button>
+                    {tryAgainButton}
+                    {neverMindButton}
                 </div>
                 Reason: {errorMessage}
-            </div>
+            </>
         ),
     })
 }
