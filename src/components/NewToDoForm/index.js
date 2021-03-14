@@ -35,7 +35,7 @@ function NewToDoForm({ addItem, removeEditMode }) {
         addItem({
             title: incompleteValue,
             id: (new Date() / 1).toString(),
-            complete: false,
+            completed: false,
         })
         setIncompleteValue("")
     }
