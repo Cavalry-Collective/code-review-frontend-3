@@ -48,8 +48,8 @@ const errorNotification = (reset, retry, errorMessage) => {
         message: "Something went wrong.",
         description: (
             <div>
-                {errorMessage}
-                <div>
+                We were not able to save your action.
+                <div style={{ margin: "10px" }}>
                     <Button
                         type="primary"
                         onClick={() => {
@@ -68,6 +68,7 @@ const errorNotification = (reset, retry, errorMessage) => {
                         Never Mind.
                     </Button>
                 </div>
+                Reason: {errorMessage}
             </div>
         ),
     })
