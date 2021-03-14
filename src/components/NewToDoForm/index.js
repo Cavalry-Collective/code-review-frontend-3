@@ -1,23 +1,10 @@
 import { useState } from "react"
 import PropTypes from "prop-types"
 import { Button, Input, Tooltip } from "antd"
-
-const newToDoContainerStyle = {
-    display: "flex",
-    margin: "10px",
-    width: "calc(80vw - 60px)",
-    justifyContent: "center",
-    alignItems: "center",
-}
+import NewToDoLayout from "../NewToDoLayout"
 
 const buttonStyle = {
     margin: "10px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-}
-
-const buttonContainerStyle = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -81,12 +68,7 @@ function NewToDoForm({ addItem, removeEditMode, removeTrashToolTip }) {
         </Tooltip>
     )
 
-    return (
-        <div style={newToDoContainerStyle}>
-            <div style={{ flex: 1 }}>{input}</div>
-            <div style={buttonContainerStyle}>{submitButton}</div>
-        </div>
-    )
+    return <NewToDoLayout {...{ input, submitButton }} />
 }
 
 export default NewToDoForm
