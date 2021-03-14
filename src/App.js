@@ -1,8 +1,8 @@
 import "antd/dist/antd.css"
 import "./App.css"
-
-import { List, Card, Checkbox, Button, Input, Popconfirm, Tooltip } from "antd"
-import { DeleteFilled, EditFilled, PlusCircleOutlined } from "@ant-design/icons"
+import { List, Card } from "antd"
+import NewToDoForm from "./components/NewToDoForm"
+import ToDoListItem from "./components/ToDoListItem"
 
 let data = [
     {
@@ -33,41 +33,7 @@ let data = [
 ]
 
 function App() {
-    const listItemRenderFunction = item => (
-        <List.Item
-            style={{
-                padding: "20px",
-                listStyleType: "none",
-                display: "flex",
-                justifyContent: "space-between",
-            }}
-        >
-            <div style={{ display: "flex" }}>
-                <Checkbox checked={item.completed}>
-                    <span style={{ padding: "10px" }}>{item.title}</span>
-                </Checkbox>
-            </div>
-            <div>
-                <Tooltip title="Edit this item">
-                    <Button
-                        icon={<EditFilled />}
-                        style={{ margin: "5px" }}
-                    ></Button>
-                </Tooltip>
-                <Popconfirm
-                    title="Are you sure to delete this task?"
-                    okText="Yes"
-                    cancelText="No"
-                >
-                    <Button
-                        danger
-                        icon={<DeleteFilled />}
-                        style={{ margin: "5px" }}
-                    />
-                </Popconfirm>
-            </div>
-        </List.Item>
-    )
+    const listItemRenderFunction = item => <ToDoListItem item={item} />
 
     return (
         <div
@@ -89,32 +55,8 @@ function App() {
                     }}
                 >
                     <h1>Things to do!</h1>
-                    <Card
-                        style={{
-                            display: "flex",
-                            width: "100%",
-                        }}
-                    >
-                        <div style={{ display: "flex", margin: "10px" }}>
-                            <Input
-                                placeholder="What do you need to do?"
-                                style={{ width: "250px", flexGrow: 1 }}
-                                size="large"
-                            />
-                            <Tooltip title="Add this item">
-                                <Button
-                                    type="primary"
-                                    icon={<PlusCircleOutlined />}
-                                    style={{
-                                        margin: "5px",
-                                        padding: "15px",
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                    }}
-                                />
-                            </Tooltip>
-                        </div>
+                    <Card style={{ display: "flex", width: "100%" }}>
+                        <NewToDoForm />
                     </Card>
                     <Card style={{ width: "100%", margin: "10px" }}>
                         <List
