@@ -63,34 +63,44 @@ function EditView({ item, updateItem, removeEditMode }) {
         ? "Please enter text before submitting"
         : "Cancel"
 
+    const editInput = (
+        <Input
+            rules={[{ required: true, message: "Required" }]}
+            placeholder={item.title}
+            size="large"
+            onChange={e => setIncompleteValue(e.target.value)}
+            onPressEnter={onSubmit}
+            value={incompleteValue}
+        />
+    )
+
+    const saveButton = (
+        <Tooltip title={saveToolTipText}>
+            <Button
+                type="primary"
+                style={saveButtonStyle}
+                onClick={onSubmit}
+                disabled={disableSubmit}
+            >
+                Save
+            </Button>
+        </Tooltip>
+    )
+
+    const cancelButton = (
+        <Tooltip title={cancelToolTipText}>
+            <Button style={cancelButtonStyle} onClick={removeEditMode}>
+                Cancel
+            </Button>
+        </Tooltip>
+    )
+
     return (
         <div style={editViewContainerStyle}>
-            <div style={{ flex: 1, minWidth: "175px" }}>
-                <Input
-                    rules={[{ required: true, message: "Required" }]}
-                    placeholder={item.title}
-                    size="large"
-                    onChange={e => setIncompleteValue(e.target.value)}
-                    onPressEnter={onSubmit}
-                    value={incompleteValue}
-                />
-            </div>
+            <div style={{ flex: 1, minWidth: "175px" }}>{editInput}</div>
             <div style={totallyCenteredStyle}>
-                <Tooltip title={saveToolTipText}>
-                    <Button
-                        type="primary"
-                        style={saveButtonStyle}
-                        onClick={onSubmit}
-                        disabled={disableSubmit}
-                    >
-                        Save
-                    </Button>
-                </Tooltip>
-                <Tooltip title={cancelToolTipText}>
-                    <Button style={cancelButtonStyle} onClick={removeEditMode}>
-                        Cancel
-                    </Button>
-                </Tooltip>
+                {saveButton}
+                {cancelButton}
             </div>
         </div>
     )
