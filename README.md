@@ -4,9 +4,16 @@
 
 -   [x] Write a web app to manage a To-Do List
 
+## Preview
+
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/1670421/111079608-a3097900-8535-11eb-9a09-816875d8eb03.gif)
+
+https://user-images.githubusercontent.com/1670421/111079613-a8ff5a00-8535-11eb-95d9-e416b68748b2.mov
+
 ## Requirements
 
--   [x] Allows a user to manage a To-Do list (CRUD) -[x] View To-Do items
+-   [x] Allows a user to manage a To-Do list (CRUD)
+-   [x] View To-Do items
 -   [x] Add a new To-Do item to the list
 -   [x] Edit a To-Do item
 -   [x] Remove a To-Do from the list
@@ -23,8 +30,8 @@
 -   [x] Use linting
 -   [x] Use static type checking, e.g. Typescript, Flow, Proptypes
 -   [ ] For back-end, write GraphQL endpoints using Apollo Server
--   [ ](Optional) Deploy
--   [ ](Optional) Secure backend endpoints with OAuth2
+-   [x] (Optional) Deploy
+-   [ ] (Optional) Secure backend endpoints with OAuth2
 
 # Submission Guidelines
 
