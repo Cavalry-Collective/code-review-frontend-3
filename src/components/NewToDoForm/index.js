@@ -33,6 +33,10 @@ function NewToDoForm({ addItem, removeEditMode, removeTrashToolTip }) {
     const [incompleteValue, setIncompleteValue] = useState("")
 
     const onSubmit = () => {
+        if (incompleteValue === "") {
+            return
+        }
+
         addItem({
             title: incompleteValue,
             id: (new Date() / 1).toString(),

@@ -46,14 +46,16 @@ EditView.propTypes = {
 function EditView({ item, updateItem, removeEditMode }) {
     const [incompleteValue, setIncompleteValue] = useState(item.title)
 
+    const disableSubmit =
+        incompleteValue === "" || item.title === incompleteValue
+
     const onSubmit = () => {
-        if (item.title === incompleteValue) {
+        if (disableSubmit) {
             return
         }
+
         updateItem({ ...item, title: incompleteValue })
     }
-
-    const disableSubmit = incompleteValue === ""
 
     const saveToolTipText = disableSubmit
         ? "Please enter text before submitting"
