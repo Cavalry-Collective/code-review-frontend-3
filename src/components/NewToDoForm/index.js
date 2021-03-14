@@ -41,40 +41,46 @@ function NewToDoForm({ addItem, removeEditMode, removeTrashToolTip }) {
         setIncompleteValue("")
     }
 
+    const onFocus = () => {
+        removeEditMode()
+        removeTrashToolTip()
+    }
+
     const disableSubmit = incompleteValue === ""
 
     const toolTipText = disableSubmit
         ? "Please enter text before submitting"
         : "Add a task"
 
+    const input = (
+        <Input
+            rules={[{ required: true, message: "Required" }]}
+            placeholder="What do you need to do?"
+            size="large"
+            onChange={e => setIncompleteValue(e.target.value)}
+            onPressEnter={onSubmit}
+            value={incompleteValue}
+            onFocus={onFocus}
+        />
+    )
+
+    const submitButton = (
+        <Tooltip title={toolTipText}>
+            <Button
+                type="primary"
+                style={buttonStyle}
+                onClick={onSubmit}
+                disabled={disableSubmit}
+            >
+                Add
+            </Button>
+        </Tooltip>
+    )
+
     return (
         <div style={newToDoContainerStyle}>
-            <div style={{ flex: 1 }}>
-                <Input
-                    rules={[{ required: true, message: "Required" }]}
-                    placeholder="What do you need to do?"
-                    size="large"
-                    onChange={e => setIncompleteValue(e.target.value)}
-                    onPressEnter={onSubmit}
-                    value={incompleteValue}
-                    onFocus={() => {
-                        removeEditMode()
-                        removeTrashToolTip()
-                    }}
-                />
-            </div>
-            <div style={buttonContainerStyle}>
-                <Tooltip title={toolTipText}>
-                    <Button
-                        type="primary"
-                        style={buttonStyle}
-                        onClick={onSubmit}
-                        disabled={disableSubmit}
-                    >
-                        Add
-                    </Button>
-                </Tooltip>
-            </div>
+            <div style={{ flex: 1 }}>{input}</div>
+            <div style={buttonContainerStyle}>{submitButton}</div>
         </div>
     )
 }
