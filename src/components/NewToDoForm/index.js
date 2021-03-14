@@ -26,9 +26,10 @@ const buttonContainerStyle = {
 NewToDoForm.propTypes = {
     addItem: PropTypes.func.isRequired,
     removeEditMode: PropTypes.func.isRequired,
+    removeTrashToolTip: PropTypes.func.isRequired,
 }
 
-function NewToDoForm({ addItem, removeEditMode }) {
+function NewToDoForm({ addItem, removeEditMode, removeTrashToolTip }) {
     const [incompleteValue, setIncompleteValue] = useState("")
 
     const onSubmit = () => {
@@ -56,7 +57,10 @@ function NewToDoForm({ addItem, removeEditMode }) {
                     onChange={e => setIncompleteValue(e.target.value)}
                     onPressEnter={onSubmit}
                     value={incompleteValue}
-                    onFocus={removeEditMode}
+                    onFocus={() => {
+                        removeEditMode()
+                        removeTrashToolTip()
+                    }}
                 />
             </div>
             <div style={buttonContainerStyle}>

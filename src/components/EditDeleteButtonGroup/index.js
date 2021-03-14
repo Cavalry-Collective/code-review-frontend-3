@@ -38,14 +38,18 @@ function EditDeleteButtonGroup({
 
     return (
         <>
-            <Tooltip title="Edit this item">
+            <Tooltip title="Edit this item" placement="left">
                 <Button
                     icon={<EditFilled />}
                     style={{ margin: "5px" }}
-                    onClick={() => setEditMode(item.id)}
+                    onClick={() => {
+                        setEditMode(item.id)
+                        removeTrashToolTip()
+                    }}
                 ></Button>
             </Tooltip>
             <Popconfirm
+                placement="left"
                 title="Are you sure you want to delete this item?"
                 visible={isTrashToolTipOpen}
                 onConfirm={handleOk}
