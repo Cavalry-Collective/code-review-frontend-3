@@ -50,7 +50,7 @@ function NewToDoForm({ addItem, removeEditMode }) {
         <div style={newToDoContainerStyle}>
             <div style={{ flex: 1 }}>
                 <Input
-                    rules={[{ required: true, message: "Reqirex" }]}
+                    rules={[{ required: true, message: "Required" }]}
                     placeholder="What do you need to do?"
                     size="large"
                     onChange={e => setIncompleteValue(e.target.value)}

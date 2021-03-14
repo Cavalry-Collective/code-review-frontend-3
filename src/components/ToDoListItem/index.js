@@ -7,6 +7,7 @@ const defaultViewCheckBoxStyle = {
     display: "flex",
     padding: "5px",
     width: "calc(100vw - 50px)",
+    overflow: "hidden",
 }
 
 const defaultViewDivStyle = {
@@ -54,7 +55,7 @@ function ToDoListItem({
                 onClick={() => setEditMode(item.id)}
             >
                 <Checkbox checked={item.completed} onChange={toggleCheckBox}>
-                    <span>{item.title}</span>
+                    {item.title}
                 </Checkbox>
             </div>
             <div style={{ display: "flex", width: "100px" }}>
