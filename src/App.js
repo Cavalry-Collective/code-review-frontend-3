@@ -35,24 +35,33 @@ let data = [
 
 function App() {
     let [toDoItems, setToDoItems] = useState(data)
+    let [currentEditModeItemId, setCurrentEditModeItemId] = useState(null)
 
     const removeItem = itemId =>
         setToDoItems(toDoItems.filter(item => item.id !== itemId))
 
     const addItem = item => setToDoItems([...toDoItems, item])
 
-    const updateItem = updatedItem =>
+    const removeEditMode = () => setCurrentEditModeItemId(null)
+    const setEditMode = id => setCurrentEditModeItemId(id)
+
+    const updateItem = updatedItem => {
         setToDoItems(
             toDoItems.map(item => {
                 return item.id === updatedItem.id ? updatedItem : item
             })
         )
+        setCurrentEditModeItemId(null)
+    }
 
     const listItemRenderFunction = item => (
         <ToDoListItem
             item={item}
+            isEditMode={currentEditModeItemId === item.id}
             removeItem={removeItem}
             updateItem={updateItem}
+            removeEditMode={removeEditMode}
+            setEditMode={setEditMode}
         />
     )
 
@@ -83,9 +92,12 @@ function App() {
                             margin: "10px",
                         }}
                     >
-                        <NewToDoForm addItem={addItem} />
+                        <NewToDoForm
+                            addItem={addItem}
+                            removeEditMode={removeEditMode}
+                        />
                     </Card>
-                    <Card style={{ width: "100%", margin: "10px" }}>
+                    <Card style={{ width: "100%" }}>
                         <List
                             size="large"
                             style={{ width: "100%" }}
