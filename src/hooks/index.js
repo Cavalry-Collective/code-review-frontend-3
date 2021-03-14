@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react"
 
+const DELAY = 5000
+const SUCCESS_RATE = 0.9
+
 let data = [
     {
         id: "1615663714830",
@@ -65,10 +68,126 @@ function useLocalStorageState(
     return [state, setState]
 }
 
-function useMockFetchToDo() {
-    const [state, setState] = useLocalStorageState("toDoList", () => data)
+const statusTypes = {
+    loading: "loading",
+    error: "error",
+    success: "success",
+    idle: "idle",
+}
 
-    return [state, setState]
+const actionTypes = {
+    add: "add",
+    remove: "remove",
+    update: "update",
+}
+const INITIAL_STATUS = {
+    statusType: statusTypes.idle,
+    action: null,
+    payLoad: null,
+    errorMessage: null,
+}
+
+function useMockFetchToDo() {
+    const [toDoItems, setToDoItems] = useLocalStorageState(
+        "toDoList",
+        () => data
+    )
+    const [status, setStatus] = useState(INITIAL_STATUS)
+
+    useEffect(() => {
+        if (status.statusType !== statusTypes.loading) {
+            return
+        }
+        const timer = setTimeout(() => {
+            if (Math.random() > SUCCESS_RATE) {
+                setStatus({
+                    ...status,
+                    statusType: statusTypes.error,
+                    errorMessage:
+                        "Mock Server randomly rejected 10% of the time",
+                })
+                return
+            }
+
+            const { action, payLoad } = status
+
+            if (action === actionTypes.remove) {
+                setToDoItems(toDoItems =>
+                    toDoItems.filter(item => item.id !== payLoad.itemId)
+                )
+            } else if (action === actionTypes.add) {
+                setToDoItems(toDoItems => [...toDoItems, payLoad.item])
+            } else if (action === actionTypes.update) {
+                setToDoItems(toDoItems =>
+                    toDoItems.map(oldItem =>
+                        oldItem.id === payLoad.item.id ? payLoad.item : oldItem
+                    )
+                )
+            } else {
+                throw new Error(`Unhandle actionType: ${action}`)
+            }
+
+            setStatus({
+                ...status,
+                errorMessage: null,
+                statusType: statusTypes.success,
+            })
+        }, DELAY)
+
+        return () => clearTimeout(timer)
+    }, [status, setStatus, setToDoItems])
+
+    const removeItem = itemId => {
+        setStatus({
+            errorMessage: null,
+            statusType: statusTypes.loading,
+            action: actionTypes.remove,
+            payLoad: { itemId },
+        })
+    }
+
+    const addItem = item => {
+        setStatus({
+            errorMessage: null,
+            statusType: statusTypes.loading,
+            action: actionTypes.add,
+            payLoad: { item },
+        })
+    }
+
+    const updateItem = item => {
+        setStatus({
+            errorMessage: null,
+            statusType: statusTypes.loading,
+            action: actionTypes.update,
+            payLoad: { item },
+        })
+    }
+
+    const retry = () => {
+        setStatus({
+            ...status,
+            statusType: statusTypes.loading,
+            errorMessage: null,
+        })
+    }
+
+    const reset = () => {
+        setStatus(INITIAL_STATUS)
+    }
+
+    const { statusType, error } = status
+    return [
+        toDoItems,
+        { updateItem, addItem, removeItem, reset, retry },
+        {
+            isLoading: statusType === statusTypes.loading,
+            isSuccess: statusType === statusTypes.success,
+            isError: statusType === statusType.error,
+            isIdle: statusType === statusType.idle,
+            error: error,
+        },
+    ]
 }
 
 export { useLocalStorageState, useMockFetchToDo }
