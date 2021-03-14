@@ -1,6 +1,27 @@
 import { useState } from "react"
 import { Button, Input, Tooltip, Form, AutoComplete } from "antd"
 
+const newToDoContainerStyle = {
+    display: "flex",
+    margin: "10px",
+    width: "calc(80vw - 60px)",
+    justifyContent: "center",
+    alignItems: "center",
+}
+
+const buttonStyle = {
+    margin: "10px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+}
+
+const buttonContainerStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+}
+
 function NewToDoForm({ addItem, removeEditMode }) {
     const [incompleteValue, setIncompleteValue] = useState("")
 
@@ -15,53 +36,28 @@ function NewToDoForm({ addItem, removeEditMode }) {
 
     const disableSubmit = incompleteValue === ""
 
+    const toolTipText = disableSubmit
+        ? "Please enter text before submitting"
+        : "Add a task"
+
     return (
-        <div
-            style={{
-                display: "flex",
-                margin: "10px",
-                width: "calc(80vw - 60px)",
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-        >
+        <div style={newToDoContainerStyle}>
             <div style={{ flex: 1 }}>
                 <Input
-                    rules={[
-                        { required: true, message: "This field is required" },
-                    ]}
+                    rules={[{ required: true, message: "Reqirex" }]}
                     placeholder="What do you need to do?"
                     size="large"
-                    onChange={e => {
-                        setIncompleteValue(e.target.value)
-                    }}
+                    onChange={e => setIncompleteValue(e.target.value)}
                     onPressEnter={onSubmit}
                     value={incompleteValue}
                     onFocus={removeEditMode}
                 />
             </div>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
-                <Tooltip
-                    title={
-                        disableSubmit
-                            ? "Please enter text before submitting"
-                            : "Add a task"
-                    }
-                >
+            <div style={buttonContainerStyle}>
+                <Tooltip title={toolTipText}>
                     <Button
                         type="primary"
-                        style={{
-                            margin: "10px",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
+                        style={buttonStyle}
                         onClick={onSubmit}
                         disabled={disableSubmit}
                     >

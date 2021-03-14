@@ -2,6 +2,18 @@ import { List, Checkbox } from "antd"
 import EditDeleteButtonGroup from "../EditDeleteButtonGroup"
 import EditView from "../EditView"
 
+const defaultViewDivStyle = {
+    display: "flex",
+    padding: "20px",
+    width: "calc(100vw - 100px)",
+}
+
+const listItemStyle = {
+    listStyleType: "none",
+    display: "flex",
+    justifyContent: "space-between",
+}
+
 function ToDoListItem({
     item,
     removeItem,
@@ -10,31 +22,20 @@ function ToDoListItem({
     removeEditMode,
     setEditMode,
 }) {
-    const toggleCheckBox = () => {
+    const toggleCheckBox = () =>
         updateItem({ ...item, completed: !item.completed })
-    }
 
     const defaultView = (
         <>
             <div
-                style={{
-                    display: "flex",
-                    padding: "20px",
-                    width: "calc(100vw - 100px)",
-                }}
+                style={defaultViewDivStyle}
                 onClick={() => setEditMode(item.id)}
             >
                 <Checkbox checked={item.completed} onChange={toggleCheckBox}>
                     <spa>{item.title}</spa>
                 </Checkbox>
             </div>
-
-            <div
-                style={{
-                    display: "flex",
-                    width: "100px",
-                }}
-            >
+            <div style={{ display: "flex", width: "100px" }}>
                 <EditDeleteButtonGroup
                     {...{
                         item,
@@ -50,17 +51,10 @@ function ToDoListItem({
     )
 
     const editView = <EditView {...{ item, updateItem, removeEditMode }} />
-    const view = isEditMode ? editView : defaultView
 
     return (
-        <List.Item
-            style={{
-                listStyleType: "none",
-                display: "flex",
-                justifyContent: "space-between",
-            }}
-        >
-            {view}
+        <List.Item style={listItemStyle}>
+            {isEditMode ? editView : defaultView}
         </List.Item>
     )
 }
