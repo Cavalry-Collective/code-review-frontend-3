@@ -1,6 +1,5 @@
 import { useState } from "react"
-import { Button, Input, Tooltip, Form } from "antd"
-import { PlusCircleOutlined } from "@ant-design/icons"
+import { Button, Input, Tooltip, Form, AutoComplete } from "antd"
 
 function NewToDoForm({ addItem }) {
     const [incompleteValue, setIncompleteValue] = useState("")
@@ -14,12 +13,13 @@ function NewToDoForm({ addItem }) {
         setIncompleteValue("")
     }
 
+    const disableSubmit = incompleteValue === ""
+
     return (
-        <div style={{ display: "flex", margin: "10px" }}>
+        <div style={{ display: "flex", margin: "10px", width: "100%" }}>
             <Input
                 rules={[{ required: true, message: "This field is required" }]}
                 placeholder="What do you need to do?"
-                style={{ width: "250px", flexGrow: 1 }}
                 size="large"
                 onChange={e => {
                     setIncompleteValue(e.target.value)
@@ -27,20 +27,36 @@ function NewToDoForm({ addItem }) {
                 onPressEnter={onSubmit}
                 value={incompleteValue}
             />
-            <Tooltip title="Add this item">
-                <Button
-                    type="primary"
-                    icon={<PlusCircleOutlined />}
-                    style={{
-                        margin: "5px",
-                        padding: "15px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
-                    onClick={onSubmit}
-                />
-            </Tooltip>
+
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <Tooltip
+                    title={
+                        disableSubmit
+                            ? "Please enter text before submitting"
+                            : "Add a task"
+                    }
+                >
+                    <Button
+                        type="primary"
+                        style={{
+                            margin: "10px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                        onClick={onSubmit}
+                        disabled={disableSubmit}
+                    >
+                        Add
+                    </Button>
+                </Tooltip>
+            </div>
         </div>
     )
 }

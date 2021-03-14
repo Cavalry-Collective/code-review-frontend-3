@@ -66,7 +66,7 @@ function App() {
                 flexDirection: "column",
             }}
         >
-            <Card style={{ width: "420px", margin: "20px" }}>
+            <Card style={{ width: "100%", margin: "20px" }}>
                 <div
                     style={{
                         display: "flex",
@@ -76,13 +76,19 @@ function App() {
                     }}
                 >
                     <h1>Things to do!</h1>
-                    <Card style={{ display: "flex", width: "100%" }}>
+                    <Card
+                        style={{
+                            display: "flex",
+                            width: "100%",
+                            margin: "10px",
+                        }}
+                    >
                         <NewToDoForm addItem={addItem} />
                     </Card>
                     <Card style={{ width: "100%", margin: "10px" }}>
                         <List
                             size="large"
-                            style={{ width: "300px", margin: "10px" }}
+                            style={{ width: "100%" }}
                             dataSource={toDoItems}
                             renderItem={item => listItemRenderFunction(item)}
                         />
