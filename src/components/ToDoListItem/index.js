@@ -1,7 +1,29 @@
+import { useState } from "react"
 import { List, Checkbox, Button, Popconfirm, Tooltip } from "antd"
 import { DeleteFilled, EditFilled } from "@ant-design/icons"
 
-function ToDoListItem({ item }) {
+function ToDoListItem({ item, removeItem }) {
+    const [visible, setVisible] = useState(false)
+    const [confirmLoading, setConfirmLoading] = useState(false)
+
+    const showPopconfirm = () => {
+        setVisible(true)
+    }
+
+    const handleOk = () => {
+        setConfirmLoading(true)
+        setTimeout(() => {
+            setVisible(false)
+            setConfirmLoading(false)
+        }, 2000)
+
+        removeItem(item)
+    }
+
+    const handleCancel = () => {
+        setVisible(false)
+    }
+
     return (
         <List.Item
             style={{
@@ -24,14 +46,17 @@ function ToDoListItem({ item }) {
                     ></Button>
                 </Tooltip>
                 <Popconfirm
-                    title="Are you sure to delete this task?"
-                    okText="Yes"
-                    cancelText="No"
+                    title="Are you sure you want to delete this item?"
+                    visible={visible}
+                    onConfirm={handleOk}
+                    okButtonProps={{ loading: confirmLoading }}
+                    onCancel={handleCancel}
                 >
                     <Button
                         danger
                         icon={<DeleteFilled />}
                         style={{ margin: "5px" }}
+                        onClick={showPopconfirm}
                     />
                 </Popconfirm>
             </div>

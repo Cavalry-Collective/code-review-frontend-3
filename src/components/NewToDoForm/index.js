@@ -4,6 +4,7 @@ import { PlusCircleOutlined } from "@ant-design/icons"
 
 function NewToDoForm({ addItem }) {
     const [incompleteValue, setIncompleteValue] = useState("")
+
     const onSubmit = () => {
         addItem({
             title: incompleteValue,

@@ -36,11 +36,14 @@ let data = [
 function App() {
     let [todoItems, setToDoItems] = useState(data)
 
-    const addItem = item => {
-        setToDoItems([...todoItems, item])
-    }
+    const removeItem = itemToRemove =>
+        setToDoItems(todoItems.filter(item => item.id !== itemToRemove.id))
 
-    const listItemRenderFunction = item => <ToDoListItem item={item} />
+    const addItem = item => setToDoItems([...todoItems, item])
+
+    const listItemRenderFunction = item => (
+        <ToDoListItem item={item} removeItem={removeItem} />
+    )
 
     return (
         <div
