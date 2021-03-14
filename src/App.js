@@ -1,5 +1,4 @@
 import "antd/dist/antd.css"
-import "./App.css"
 import { useState } from "react"
 import { List, Card } from "antd"
 import NewToDoForm from "./components/NewToDoForm"
@@ -86,7 +85,7 @@ function App() {
     )
 
     return (
-        <div className="App" style={appContainerStyle}>
+        <div style={appContainerStyle}>
             <Card style={{ width: "90%", margin: "10px" }}>
                 <div style={divInnerStyle}>
                     <h1>Things to do!</h1>
