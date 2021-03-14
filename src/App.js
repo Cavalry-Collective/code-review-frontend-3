@@ -32,9 +32,9 @@ let data = [
     },
 ]
 
-function App() {
-    const listItemRenderFunction = item => <ToDoListItem item={item} />
+const listItemRenderFunction = item => <ToDoListItem item={item} />
 
+function App() {
     return (
         <div
             className="App"
