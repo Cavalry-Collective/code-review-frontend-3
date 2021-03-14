@@ -3,34 +3,7 @@ import { useState } from "react"
 import { List, Card } from "antd"
 import NewToDoForm from "./components/NewToDoForm"
 import ToDoListItem from "./components/ToDoListItem"
-
-let data = [
-    {
-        id: "1615663714830",
-        title: "Eat breakfast",
-        completed: false,
-    },
-    {
-        id: "1615663714831",
-        title: "Do laundry",
-        completed: true,
-    },
-    {
-        id: "1615663714832",
-        title: "Take out the trash",
-        completed: false,
-    },
-    {
-        id: "1615663714833",
-        title: "Write a blog post",
-        completed: true,
-    },
-    {
-        id: "1615663714834",
-        title: "Go out for a walk",
-        completed: false,
-    },
-]
+import { useMockFetchToDo } from "./hooks/"
 
 const appContainerStyle = {
     display: "flex",
@@ -53,7 +26,7 @@ const cardInnerStyle = {
 }
 
 function App() {
-    let [toDoItems, setToDoItems] = useState(data)
+    let [toDoItems, setToDoItems] = useMockFetchToDo()
     let [currentEditModeItemId, setCurrentEditModeItemId] = useState(null)
 
     const removeItem = itemId =>
