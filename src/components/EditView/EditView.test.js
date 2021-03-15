@@ -15,10 +15,14 @@ const oldItem = {
 const newTitle = "the new title"
 
 describe("EditView", () => {
-    test("Clicking the save button updates the item and goes out of edit mode", async () => {
-        const inputField = screen.getByRole("textbox", {
-            value: oldItem.title,
-        })
+    test("Typing a new title and clicking the save button updates the item and goes out of edit mode", async () => {
+        render(
+            <EditView
+                {...{ item: oldItem, updateItem, setEditMode, setTrashToolTip }}
+            />
+        )
+
+        const inputField = screen.getByRole("textbox", { value: oldItem.title })
         expect(inputField).toBeInTheDocument()
         userEvent.type(inputField, newTitle)
 
@@ -28,7 +32,7 @@ describe("EditView", () => {
         expect(setEditMode).toHaveBeenCalledWith(null)
     })
 
-    test("Clicking the cancel button does not update item and removes edit mode", async () => {
+    test("Clicking the cancel button removes edit mode  and does not update item", async () => {
         render(
             <EditView
                 {...{ item: oldItem, updateItem, setEditMode, setTrashToolTip }}
