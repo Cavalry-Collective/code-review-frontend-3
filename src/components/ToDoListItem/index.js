@@ -18,6 +18,7 @@ const invisibleButtonStyle = {
     textAlign: "left",
     background: "white",
     border: "1px dotted rgba(200, 200,200, 0.5)",
+    cursor: "pointer",
 }
 
 const itemShape = PropTypes.shape({
@@ -67,7 +68,11 @@ function ToDoListItem({
     }
 
     const clickableToDoTitle = (
-        <button style={invisibleButtonStyle} onClick={onClickTitle}>
+        <button
+            style={invisibleButtonStyle}
+            onClick={onClickTitle}
+            title="Click to edit"
+        >
             {item.title}
         </button>
     )
