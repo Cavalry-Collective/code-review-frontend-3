@@ -48,6 +48,7 @@ function ToDoListItem({
 }) {
     const toggleCheckBox = () => {
         updateItem({ ...item, completed: !item.completed })
+        setEditMode(null)
         setTrashToolTip(null)
         removeAllNotifications()
     }
@@ -56,7 +57,7 @@ function ToDoListItem({
         <Checkbox
             checked={item.completed}
             onChange={toggleCheckBox}
-            aria-label={item.title}
+            title={item.title}
             style={{ width: "20px" }}
         />
     )
