@@ -15,7 +15,7 @@ const oldItem = {
 const newTitle = "the new title"
 
 describe("EditView", () => {
-    test("Clicking the save button `updateItem` prop", async () => {
+    test("Clicking the save button updates the item and goes out of edit mode", async () => {
         render(
             <EditView
                 {...{
@@ -34,9 +34,11 @@ describe("EditView", () => {
 
         userEvent.click(screen.getByRole("button", { name: /save/i }))
         expect(updateItem).toHaveBeenCalledTimes(1)
+        expect(setEditMode).toHaveBeenCalledTimes(1)
+        expect(setEditMode).toHaveBeenCalledWith(null)
     })
 
-    test("Clicking the cancel button calls the expected callbacks passed as props", async () => {
+    test("Clicking the cancel button does not update item and removes edit mode", async () => {
         render(
             <EditView
                 {...{
@@ -49,6 +51,7 @@ describe("EditView", () => {
         )
 
         userEvent.click(screen.getByRole("button", { name: /cancel/i }))
+        expect(updateItem).not.toHaveBeenCalled()
         expect(setEditMode).toHaveBeenCalledTimes(1)
         expect(setEditMode).toHaveBeenCalledWith(null)
     })
