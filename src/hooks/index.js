@@ -4,9 +4,15 @@ import useLocalStorageState from "./useLocalStorageState"
 const DELAY = 500
 const SUCCESS_RATE = 0.8
 
-function wait(ms, value) {
-    return new Promise(resolve => setTimeout(resolve, DELAY, value))
-}
+const wait = () => new Promise(resolve => setTimeout(resolve, DELAY))
+
+const mockRemove = (toDoItems, itemId) =>
+    toDoItems.filter(item => item.id !== itemId)
+
+const mockAdd = (toDoItems, item) => [...toDoItems, item]
+
+const mockUpdate = (toDoItems, item) =>
+    toDoItems.map(oldItem => (oldItem.id === item.id ? item : oldItem))
 
 const statusTypes = {
     loading: "loading",
@@ -38,6 +44,7 @@ function useMockFetchToDo() {
 
         const doAction = async () => {
             await wait()
+
             const willReject = Math.random() > SUCCESS_RATE
             const percent = Math.round((1.0 - SUCCESS_RATE) * 100)
             if (willReject) {
@@ -53,17 +60,11 @@ function useMockFetchToDo() {
             const { action, payLoad } = status
 
             if (action === actionTypes.remove) {
-                setToDoItems(toDoItems =>
-                    toDoItems.filter(item => item.id !== payLoad.itemId)
-                )
+                setToDoItems(toDoItems => mockRemove(toDoItems, payLoad.itemId))
             } else if (action === actionTypes.add) {
-                setToDoItems(toDoItems => [...toDoItems, payLoad.item])
+                setToDoItems(toDoItems => mockAdd(toDoItems, payLoad.item))
             } else if (action === actionTypes.update) {
-                setToDoItems(toDoItems =>
-                    toDoItems.map(oldItem =>
-                        oldItem.id === payLoad.item.id ? payLoad.item : oldItem
-                    )
-                )
+                setToDoItems(toDoItems => mockUpdate(toDoItems, payLoad.item))
             } else {
                 throw new Error(`Unhandle actionType: ${action}`)
             }
