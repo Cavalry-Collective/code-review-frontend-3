@@ -24,7 +24,7 @@ function App() {
         if (isLoading) {
             loadingNotification()
         } else if (isError) {
-            errorNotification(errorMessage)
+            errorNotification(errorMessage, reset)
         } else if (isSuccess) {
             successNotification(reset)
         }

@@ -1,6 +1,11 @@
 import "antd/dist/antd.css"
-import { Button, Spin, Space, notification } from "antd"
+import { Button, Spin, Space, notification, Alert } from "antd"
 
+const notificationTypes = {
+    error: "error",
+    success: "success",
+    loading: "loading",
+}
 function Spinner() {
     return (
         <Space size="large">
@@ -9,47 +14,72 @@ function Spinner() {
     )
 }
 
+const loadingNotification = () => {
+    notification.close(notificationTypes.success)
+    notification.close(notificationTypes.loading)
+
+    notification.open({
+        duration: 2.5,
+        message: "Syncing server...",
+        icon: <Spinner />,
+        key: notificationTypes.loading,
+    })
+}
+
 const successNotification = reset => {
-    const key = `open${Date.now()}`
+    notification.close(notificationTypes.success)
+    notification.close(notificationTypes.loading)
 
     const onClose = () => {
         reset()
-        notification.close(key)
+        notification.close(notificationTypes.success)
     }
 
     const btn = (
         <Button type="primary" size="small" onClick={onClose}>
-            Ok
+            Got it!
         </Button>
     )
     notification.success({
         message: "Request Successful!",
         btn,
-        key,
+        key: notificationTypes.success,
         duration: 2.5,
     })
 }
 
-const loadingNotification = () => {
-    notification.open({
-        duration: 1,
-        message: "Syncing server... please wait",
-        icon: <Spinner />,
-    })
-}
+const errorNotification = (errorMessage, reset) => {
+    notification.close(notificationTypes.loading)
+    notification.close(notificationTypes.error)
 
-const errorNotification = errorMessage => {
+    const onClose = () => {
+        reset()
+        notification.close(notificationTypes.error)
+    }
+
+    const btn = (
+        <Button type="primary" size="small" onClick={onClose}>
+            I understand
+        </Button>
+    )
+
     notification.error({
+        key: notificationTypes.error,
         duration: null,
         message: "Something went wrong. 😖 ❌",
         description: (
             <>
                 We were not able to save your action.
-                <div style={{ margin: "10px" }}>Reason: {errorMessage}</div>
+                <Alert
+                    type="error"
+                    style={{ margin: "10px" }}
+                    message={`Reason: ${errorMessage}`}
+                />
                 Try performing the action again. Hopefully it works this time!
             </>
         ),
+        btn,
     })
 }
 
-export { successNotification, loadingNotification, errorNotification }
+export { loadingNotification, successNotification, errorNotification }
