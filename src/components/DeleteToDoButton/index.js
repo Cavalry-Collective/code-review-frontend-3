@@ -4,7 +4,6 @@ import { DeleteFilled } from "@ant-design/icons"
 
 DeleteToDoButton.propTypes = {
     removeItem: PropTypes.func.isRequired,
-    setEditMode: PropTypes.func.isRequired,
     removeEditMode: PropTypes.func.isRequired,
     removeTrashToolTip: PropTypes.func.isRequired,
     setTrashToolTip: PropTypes.func.isRequired,
