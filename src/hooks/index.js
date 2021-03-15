@@ -1,8 +1,12 @@
 import { useState, useEffect, useCallback } from "react"
 import useLocalStorageState from "./useLocalStorageState"
 
-const DELAY = 350
+const DELAY = 500
 const SUCCESS_RATE = 0.8
+
+function wait(ms, value) {
+    return new Promise(resolve => setTimeout(resolve, DELAY, value))
+}
 
 const statusTypes = {
     loading: "loading",
@@ -32,7 +36,8 @@ function useMockFetchToDo() {
             return
         }
 
-        const timer = setTimeout(() => {
+        const doAction = async () => {
+            await wait()
             const willReject = Math.random() > SUCCESS_RATE
             const percent = Math.round((1.0 - SUCCESS_RATE) * 100)
             if (willReject) {
@@ -68,9 +73,9 @@ function useMockFetchToDo() {
                 errorMessage: null,
                 statusType: statusTypes.success,
             })
-        }, DELAY)
+        }
 
-        return () => clearTimeout(timer)
+        doAction()
     }, [status, setStatus, setToDoItems])
 
     const removeItem = itemId => {
