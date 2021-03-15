@@ -14,8 +14,8 @@ import AppLayout from "./AppLayout"
 function App() {
     let [
         toDoItems,
-        { updateItem: serverUpdateItem, addItem, removeItem, reset, retry },
-        { isLoading, isSuccess, isError, isIdle, errorMessage },
+        { updateItem: serverUpdateItem, addItem, removeItem, reset },
+        { isLoading, isSuccess, isError, errorMessage },
     ] = useMockFetchToDo()
     let [currentEditModeItemId, setCurrentEditModeItemId] = useState(null)
     let [currentTrashToolTipOpen, setCurrentTrashToolTipOpen] = useState(null)
@@ -24,11 +24,11 @@ function App() {
         if (isLoading) {
             loadingNotification()
         } else if (isError) {
-            errorNotification(reset, retry, errorMessage)
+            errorNotification(errorMessage)
         } else if (isSuccess) {
             successNotification(reset)
         }
-    }, [isLoading, isError, isSuccess, errorMessage, isIdle, reset, retry])
+    }, [isLoading, isError, isSuccess, errorMessage, reset])
 
     const updateItem = updatedItem => {
         serverUpdateItem(updatedItem)

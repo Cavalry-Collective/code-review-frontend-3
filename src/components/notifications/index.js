@@ -38,39 +38,15 @@ const loadingNotification = () => {
     })
 }
 
-const errorNotification = (reset, retry, errorMessage) => {
-    const key = `open${Date.now()}`
-
-    const onTryAgain = () => {
-        retry()
-        notification.close(key)
-    }
-
-    const onNeverMind = () => {
-        reset()
-        notification.close(key)
-    }
-
-    const tryAgainButton = (
-        <Button type="primary" onClick={onTryAgain}>
-            Try again
-        </Button>
-    )
-
-    const neverMindButton = <Button onClick={onNeverMind}>Never Mind.</Button>
-
+const errorNotification = errorMessage => {
     notification.error({
-        key,
         duration: null,
-        message: "Something went wrong.",
+        message: "Something went wrong. 😖 ❌",
         description: (
             <>
                 We were not able to save your action.
-                <div style={{ margin: "10px" }}>
-                    {tryAgainButton}
-                    {neverMindButton}
-                </div>
-                Reason: {errorMessage}
+                <div style={{ margin: "10px" }}>Reason: {errorMessage}</div>
+                Try performing the action again. Hopefully it works this time!
             </>
         ),
     })
