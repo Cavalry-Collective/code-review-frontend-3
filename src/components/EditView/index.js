@@ -18,24 +18,23 @@ EditView.propTypes = {
 function EditView({ item, updateItem, setEditMode }) {
     const [incompleteValue, setIncompleteValue] = useState(item.title)
 
-    const disableSubmit =
-        incompleteValue === "" || item.title === incompleteValue
+    const noValue = incompleteValue === ""
+    const sameValue = item.title === incompleteValue
+    const disabledSubmit = noValue || sameValue
 
     const onSubmit = () => {
-        if (disableSubmit) {
+        if (disabledSubmit) {
             return
         }
 
         updateItem({ ...item, title: incompleteValue })
     }
 
-    const saveToolTipText = disableSubmit
-        ? "Please enter text before submitting"
-        : "Update this task"
-
-    const cancelToolTipText = disableSubmit
-        ? "Please enter text before submitting"
-        : "Cancel"
+    const saveToolTipText = noValue
+        ? "Write something first!"
+        : sameValue
+        ? "You didn't make any changes!"
+        : "Update this item!"
 
     const editInput = (
         <Input
@@ -54,7 +53,7 @@ function EditView({ item, updateItem, setEditMode }) {
                 type="primary"
                 style={{ margin: "10px" }}
                 onClick={onSubmit}
-                disabled={disableSubmit}
+                disabled={disabledSubmit}
             >
                 Save
             </Button>
@@ -62,9 +61,7 @@ function EditView({ item, updateItem, setEditMode }) {
     )
 
     const cancelButton = (
-        <Tooltip title={cancelToolTipText}>
-            <Button onClick={() => setEditMode(null)}>Cancel</Button>
-        </Tooltip>
+        <Button onClick={() => setEditMode(null)}>Cancel</Button>
     )
 
     return <EditViewLayout {...{ editInput, saveButton, cancelButton }} />

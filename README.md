@@ -8,8 +8,6 @@
 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/1670421/111079608-a3097900-8535-11eb-9a09-816875d8eb03.gif)
 
-https://user-images.githubusercontent.com/1670421/111079613-a8ff5a00-8535-11eb-95d9-e416b68748b2.mov
-
 ## Requirements
 
 -   [x] Allows a user to manage a To-Do list (CRUD)
@@ -19,7 +17,7 @@ https://user-images.githubusercontent.com/1670421/111079613-a8ff5a00-8535-11eb-9
 -   [x] Remove a To-Do from the list
 -   [x] When page is refreshed, list will not be reset
 -   [ ] Fetch and save data to Node.js server using GraphQL
-    -   Important! Currently using a custom `mockFetchToDoList` hook that simulates interacting with a backend. It uses local storage, `setTimeOut` for delay, and `10%` chance request will fail with `Math.random()`. For more information see [the source code](./src/hooks/index.js)
+    -   Important! Currently using a custom hook that simulates interacting with a backend. It uses local storage, `setTimeOut` for delay (350ms), and `20%` chance the request will fail with `Math.random()`. For more information see the source code for the custom[`mockFetchToDoList`](./src/hooks/index.js) hook.
 
 ## Specifications
 
