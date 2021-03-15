@@ -30,18 +30,13 @@ function App() {
         }
     }, [isLoading, isError, isSuccess, errorMessage, reset])
 
-    const updateItemWithEffect = updatedItem => {
-        updateItem(updatedItem)
-        setCurrentEditModeItemId(null)
-    }
-
     const listItemRenderFunction = item => {
         return (
             <ToDoListItem
                 item={item}
                 isEditMode={currentEditModeItemId === item.id}
                 removeItem={removeItem}
-                updateItem={updateItemWithEffect}
+                updateItem={updateItem}
                 setEditMode={setCurrentEditModeItemId}
                 setTrashToolTip={setCurrentTrashToolTipOpen}
                 isTrashToolTipOpen={currentTrashToolTipOpen === item.id}

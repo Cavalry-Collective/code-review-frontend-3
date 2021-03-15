@@ -28,6 +28,7 @@ function EditView({ item, updateItem, setEditMode }) {
         }
 
         updateItem({ ...item, title: incompleteValue })
+        setEditMode(null)
     }
 
     const saveToolTipText = noValue
