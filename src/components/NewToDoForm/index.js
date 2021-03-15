@@ -20,11 +20,7 @@ function NewToDoForm({ addItem, setEditMode, setTrashToolTip }) {
             return
         }
 
-        addItem({
-            title: incompleteValue,
-            id: createId(),
-            completed: false,
-        })
+        addItem({ title: incompleteValue, id: createId(), completed: false })
         setIncompleteValue("")
     }
 
@@ -49,6 +45,7 @@ function NewToDoForm({ addItem, setEditMode, setTrashToolTip }) {
             onPressEnter={onSubmit}
             value={incompleteValue}
             onFocus={onFocus}
+            name={"add todo"}
         />
     )
 
