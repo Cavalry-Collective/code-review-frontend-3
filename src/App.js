@@ -14,7 +14,7 @@ import AppLayout from "./AppLayout"
 function App() {
     let [
         toDoItems,
-        { updateItem: serverUpdateItem, addItem, removeItem, reset },
+        { updateItem, addItem, removeItem, reset },
         { isLoading, isSuccess, isError, errorMessage },
     ] = useMockFetchToDo()
     let [currentEditModeItemId, setCurrentEditModeItemId] = useState(null)
@@ -30,16 +30,10 @@ function App() {
         }
     }, [isLoading, isError, isSuccess, errorMessage, reset])
 
-    const updateItem = updatedItem => {
-        serverUpdateItem(updatedItem)
+    const updateItemWithEffect = updatedItem => {
+        updateItem(updatedItem)
         setCurrentEditModeItemId(null)
     }
-
-    const removeEditMode = () => setCurrentEditModeItemId(null)
-    const setEditMode = id => setCurrentEditModeItemId(id)
-
-    const removeTrashToolTip = () => setCurrentTrashToolTipOpen(null)
-    const setTrashToolTip = id => setCurrentTrashToolTipOpen(id)
 
     const listItemRenderFunction = item => {
         return (
@@ -47,11 +41,9 @@ function App() {
                 item={item}
                 isEditMode={currentEditModeItemId === item.id}
                 removeItem={removeItem}
-                updateItem={updateItem}
-                removeEditMode={removeEditMode}
-                setEditMode={setEditMode}
-                removeTrashToolTip={removeTrashToolTip}
-                setTrashToolTip={setTrashToolTip}
+                updateItem={updateItemWithEffect}
+                setEditMode={setCurrentEditModeItemId}
+                setTrashToolTip={setCurrentTrashToolTipOpen}
                 isTrashToolTipOpen={currentTrashToolTipOpen === item.id}
             />
         )
@@ -60,8 +52,8 @@ function App() {
     const newToDoForm = (
         <NewToDoForm
             addItem={addItem}
-            removeEditMode={removeEditMode}
-            removeTrashToolTip={removeTrashToolTip}
+            setEditMode={setCurrentEditModeItemId}
+            setTrashToolTip={setCurrentTrashToolTipOpen}
         />
     )
     const toDoList = (
