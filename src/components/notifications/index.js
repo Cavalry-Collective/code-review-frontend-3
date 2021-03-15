@@ -82,4 +82,15 @@ const errorNotification = (errorMessage, reset) => {
     })
 }
 
-export { loadingNotification, successNotification, errorNotification }
+const removeAllNotifications = () => {
+    notification.close(notificationTypes.error)
+    notification.close(notificationTypes.success)
+    notification.close(notificationTypes.loading)
+}
+
+export {
+    loadingNotification,
+    successNotification,
+    errorNotification,
+    removeAllNotifications,
+}
