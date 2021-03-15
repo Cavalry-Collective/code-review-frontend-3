@@ -67,9 +67,7 @@ describe("DeleteToDoButton", () => {
         render(closedDeleteToDoButton)
 
         const deleteButton = screen.getByRole("button", { name: /delete/i })
-        const confirmToolTip = screen.queryByRole("tooltip", {
-            title: /Are you sure you want to delete this item?/i,
-        })
+        const confirmToolTip = screen.queryByRole("tooltip")
 
         expect(confirmToolTip).not.toBeInTheDocument()
         expect(deleteButton).not.toBeDisabled()
@@ -82,9 +80,7 @@ describe("DeleteToDoButton", () => {
         })
         expect(deleteButton).toBeInTheDocument()
 
-        let confirmToolTip = screen.queryByRole("tooltip", {
-            title: /Are you sure you want to delete this item?/i,
-        })
+        let confirmToolTip = screen.queryByRole("tooltip")
         expect(confirmToolTip).not.toBeInTheDocument()
 
         userEvent.click(deleteButton)
