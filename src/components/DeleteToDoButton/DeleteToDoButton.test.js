@@ -3,8 +3,9 @@ import DeleteToDoButton from "."
 
 const createId = () => (new Date() / 1).toString()
 
-test("Expect delete button to contain the delete button and trash icon ", async () => {
-    const mockFunction = jest.fn()
+const mockFunction = jest.fn()
+
+test("DeleteToDoButton: contains the delete button and has trash icon as its child ", async () => {
     const id = createId()
     render(
         <DeleteToDoButton
@@ -22,4 +23,5 @@ test("Expect delete button to contain the delete button and trash icon ", async 
     expect(deleteButton).toBeInTheDocument()
     const trashIcon = screen.getByRole("img", { "aria-label": /delete/i })
     expect(trashIcon).toBeInTheDocument()
+    expect(trashIcon.parentElement).toBe(deleteButton)
 })
