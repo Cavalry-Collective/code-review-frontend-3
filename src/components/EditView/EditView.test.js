@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event"
 
 const updateItem = jest.fn()
 const setEditMode = jest.fn()
+const setTrashToolTip = jest.fn()
 
 const oldItem = {
     id: "doesn't matter",
@@ -24,6 +25,7 @@ describe("EditView", () => {
                 }}
             />
         )
+
         const inputField = screen.getByRole("textbox", {
             value: oldItem.title,
         })
@@ -34,13 +36,14 @@ describe("EditView", () => {
         expect(updateItem).toHaveBeenCalledTimes(1)
     })
 
-    test("Clicking the cancel button `setViewMode` prop to set view mode to null", async () => {
+    test("Clicking the cancel button calls the expected callbacks passed as props", async () => {
         render(
             <EditView
                 {...{
                     item: oldItem,
                     updateItem,
                     setEditMode,
+                    setTrashToolTip,
                 }}
             />
         )

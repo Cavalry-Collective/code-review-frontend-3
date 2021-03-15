@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 import DeleteToDoButton from "."
 
 const createId = () => (new Date() / 1).toString()
@@ -37,7 +36,11 @@ describe("DeleteToDoButton", () => {
         const deleteButton = screen.getByRole("button", { name: /delete/i })
         expect(deleteButton).toBeInTheDocument()
         const trashIcon = screen.getByRole("img", { name: /delete/i })
-        expect(screen.getByRole("tooltip")).toBeInTheDocument()
+        expect(
+            screen.getByRole("tooltip", {
+                title: "Are you sure you want to delete this item?",
+            })
+        ).toBeInTheDocument()
         expect(trashIcon).toBeInTheDocument()
         expect(deleteButton).toContainElement(trashIcon)
         expect(deleteButton).toBeDisabled()
