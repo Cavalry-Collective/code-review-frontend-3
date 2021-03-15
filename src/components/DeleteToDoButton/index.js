@@ -42,6 +42,7 @@ function DeleteToDoButton({
                 icon={<DeleteFilled />}
                 style={{ margin: "5px" }}
                 onClick={clickTrash}
+                disabled={isTrashToolTipOpen}
             />
         </Popconfirm>
     )
