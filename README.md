@@ -1,8 +1,11 @@
-# To Do Client [![View Deployed Site](https://img.shields.io/badge/View%20-Deployed%20Site-orange.svg?logo=react&color=0abde3)](https://to-do-client.vercel.app/)
+# To Do Client [![View Deployed Site](https://img.shields.io/badge/View%20-Deployed%20Site-orange.svg?logo=react&color=0abde3)](https://to-do-client.vercel.app/) [![](https://api.codeclimate.com/v1/badges/ce7b5dae8d6915a5c1c9/maintainability")](https://codeclimate.com/github/mithi/to-do-client/maintainability) [![technical debt](https://img.shields.io/codeclimate/tech-debt/mithi/to-do-client)](https://codeclimate.com/github/mithi/to-do-client/trends/technical_debt)
+
+[![code coverage](https://code
 
 ## Objective
 
 -   [x] Write a web app to manage a To-Do List
+-   [x] Finish within 72 hours
 
 ## Preview
 
