@@ -16,16 +16,6 @@ const newTitle = "the new title"
 
 describe("EditView", () => {
     test("Clicking the save button updates the item and goes out of edit mode", async () => {
-        render(
-            <EditView
-                {...{
-                    item: oldItem,
-                    updateItem,
-                    setEditMode,
-                }}
-            />
-        )
-
         const inputField = screen.getByRole("textbox", {
             value: oldItem.title,
         })
@@ -41,12 +31,7 @@ describe("EditView", () => {
     test("Clicking the cancel button does not update item and removes edit mode", async () => {
         render(
             <EditView
-                {...{
-                    item: oldItem,
-                    updateItem,
-                    setEditMode,
-                    setTrashToolTip,
-                }}
+                {...{ item: oldItem, updateItem, setEditMode, setTrashToolTip }}
             />
         )
 
