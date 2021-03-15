@@ -61,7 +61,7 @@ describe("ToDoListItem", () => {
     test("Render the expected html elements when in edit mode and nothing more", () => {
         render(editModeToDoItem)
 
-        const inputField = screen.getByRole("textbox", { value: item.title })
+        const inputField = screen.getByRole("textbox")
         expect(inputField).toBeInTheDocument()
 
         const saveButton = screen.getByRole("button", { name: /save/i })
@@ -114,7 +114,7 @@ describe("ToDoListItem", () => {
         })
         expect(trashToolTip).toBeInTheDocument()
 
-        const inputField = screen.queryByRole("textbox", { value: item.title })
+        const inputField = screen.queryByRole("textbox")
         expect(inputField).not.toBeInTheDocument()
 
         const saveButton = screen.queryByRole("button", { name: /save/i })
@@ -144,7 +144,7 @@ describe("ToDoListItem", () => {
 
         expect(trashToolTip).not.toBeInTheDocument()
 
-        const inputField = screen.queryByRole("textbox", { value: item.title })
+        const inputField = screen.queryByRole("textbox")
         expect(inputField).not.toBeInTheDocument()
 
         const saveButton = screen.queryByRole("button", { name: /save/i })

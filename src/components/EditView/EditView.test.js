@@ -22,7 +22,7 @@ describe("EditView", () => {
             />
         )
 
-        const inputField = screen.getByRole("textbox", { value: oldItem.title })
+        const inputField = screen.getByRole("textbox")
         expect(inputField).toBeInTheDocument()
         userEvent.type(inputField, newTitle)
 

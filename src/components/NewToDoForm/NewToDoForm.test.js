@@ -20,7 +20,7 @@ describe("NewToDoForm", () => {
         expect(addButton).toBeInTheDocument()
         expect(addButton).toBeDisabled()
 
-        const inputField = screen.getByRole("textbox", { value: "" })
+        const inputField = screen.getByRole("textbox")
 
         expect(inputField).toBeInTheDocument()
         userEvent.click(inputField)
@@ -38,7 +38,7 @@ describe("NewToDoForm", () => {
     test("Typing and clicking the button will call the necessary callback functions given as prop", () => {
         render(newToDoForm)
 
-        const inputField = screen.getByRole("textbox", { value: "" })
+        const inputField = screen.getByRole("textbox")
         userEvent.type(inputField, newTitle)
 
         let addButton = screen.getByRole("button", { name: /add/i })
