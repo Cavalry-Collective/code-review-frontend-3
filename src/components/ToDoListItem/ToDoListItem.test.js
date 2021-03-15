@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react"
-import NewToDoForm from "."
+import userEvent from "@testing-library/user-event"
+import ToDoListItem from "."
 //import userEvent from "@testing-library/user-event"
 
 const item = {
@@ -14,7 +15,7 @@ const setEditMode = jest.fn()
 const setTrashToolTip = jest.fn()
 
 const viewModeToDoItemTrashToolTipClosed = (
-    <NewToDoForm
+    <ToDoListItem
         {...{
             item,
             removeItem,
@@ -28,7 +29,7 @@ const viewModeToDoItemTrashToolTipClosed = (
 )
 
 const viewModeToDoItemTrashToolTipOpen = (
-    <NewToDoForm
+    <ToDoListItem
         {...{
             item,
             removeItem,
@@ -42,7 +43,7 @@ const viewModeToDoItemTrashToolTipOpen = (
 )
 
 const editModeToDoItem = (
-    <NewToDoForm
+    <ToDoListItem
         {...{
             item,
             removeItem,
@@ -136,5 +137,23 @@ describe("ToDoListItem", () => {
 
         const saveButton = screen.queryByRole("button", { name: /save/i })
         expect(saveButton).not.toBeInTheDocument()
+    })
+
+    test("Trigger the expected callbacks when check box is clicked (trash tooltip is closed)", () => {
+        render(viewModeToDoItemTrashToolTipClosed)
+        const checkbox = screen.getByRole("checkbox")
+
+        userEvent.click(checkbox)
+        expect(updateItem).toHaveBeenCalled()
+        expect(setEditMode).not.toHaveBeenCalled()
+    })
+
+    test("Trigger the expected callbacks when check box is clicked (trash tooltip is open)", () => {
+        render(viewModeToDoItemTrashToolTipOpen)
+        const checkbox = screen.getByRole("checkbox")
+
+        userEvent.click(checkbox)
+        expect(updateItem).toHaveBeenCalled()
+        expect(setEditMode).not.toHaveBeenCalled()
     })
 })
