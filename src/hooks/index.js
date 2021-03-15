@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react"
 import useLocalStorageState from "./useLocalStorageState"
+import { sometimesRejects } from "./utils"
 
 const DELAY = 500
-const SUCCESS_RATE = 0.8
 
 const wait = () => new Promise(resolve => setTimeout(resolve, DELAY))
 
@@ -45,15 +45,10 @@ function useMockFetchToDo() {
         const doAction = async () => {
             await wait()
 
-            const willReject = Math.random() > SUCCESS_RATE
-            const percent = Math.round((1.0 - SUCCESS_RATE) * 100)
-            if (willReject) {
-                const errorMessage = `Mock Server randomly rejects ${percent}% of the time`
-                setStatus({
-                    ...status,
-                    statusType: statusTypes.error,
-                    errorMessage,
-                })
+            const { isRejected, errorMessage } = sometimesRejects()
+            if (isRejected) {
+                // prettier-ignore
+                setStatus({ ...status, statusType: statusTypes.error, errorMessage })
                 return
             }
 
@@ -69,11 +64,8 @@ function useMockFetchToDo() {
                 throw new Error(`Unhandle actionType: ${action}`)
             }
 
-            setStatus({
-                ...status,
-                errorMessage: null,
-                statusType: statusTypes.success,
-            })
+            // prettier-ignore
+            setStatus({ ...status, errorMessage: null, statusType: statusTypes.success })
         }
 
         doAction()
