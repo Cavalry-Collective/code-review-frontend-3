@@ -35,6 +35,21 @@ const INITIAL_TODO_LIST = [
         completed: false,
         id: "1615786227593",
     },
+    {
+        title: "start JWC CSS for JS Course",
+        completed: true,
+        id: "1615786227594",
+    },
+    {
+        title: "UI.dev typescript",
+        completed: true,
+        id: "1615786227595",
+    },
+    {
+        title: "100 days of Typescript with AlgoExpert",
+        completed: true,
+        id: "1615786227597",
+    },
 ]
 
 const USE_FETCH_TODO_RETURN_VALUE = [
@@ -54,12 +69,15 @@ const USE_FETCH_TODO_RETURN_VALUE = [
         errorMessage: null,
     },
 ]
-
 jest.mock("./hooks")
 
-test("Renders To Do Title", async () => {
+test("Renders title and all initial to do list items", async () => {
     useMockFetchToDo.mockReturnValue(USE_FETCH_TODO_RETURN_VALUE)
     render(<App />)
     const textNode = screen.getByText(/things to do/i)
     expect(textNode).toBeInTheDocument()
+
+    INITIAL_TODO_LIST.forEach(item => {
+        expect(screen.getByText(item.title)).toBeInTheDocument()
+    })
 })
