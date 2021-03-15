@@ -36,6 +36,7 @@ function DeleteToDoButton({
             visible={isTrashToolTipOpen}
             onConfirm={clickConfirm}
             onCancel={() => setTrashToolTip(null)}
+            name="trash tooltip"
         >
             <Button
                 danger
@@ -43,6 +44,8 @@ function DeleteToDoButton({
                 style={{ margin: "5px" }}
                 onClick={clickTrash}
                 disabled={isTrashToolTipOpen}
+                title="delete item"
+                name="delete item"
             />
         </Popconfirm>
     )

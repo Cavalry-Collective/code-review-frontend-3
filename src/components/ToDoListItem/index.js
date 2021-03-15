@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import { List, Checkbox } from "antd"
+import { List, Checkbox, Tooltip } from "antd"
 import EditView from "../EditView"
 import DeleteToDoButton from "../DeleteToDoButton"
 import EditToDoButton from "../EditToDoButton"
@@ -68,13 +68,11 @@ function ToDoListItem({
     }
 
     const clickableToDoTitle = (
-        <button
-            style={invisibleButtonStyle}
-            onClick={onClickTitle}
-            title="Click to edit"
-        >
-            {item.title}
-        </button>
+        <Tooltip title="Edit this item">
+            <button style={invisibleButtonStyle} onClick={onClickTitle}>
+                {item.title}
+            </button>
+        </Tooltip>
     )
 
     const editToDoButton = (

@@ -22,7 +22,7 @@ function EditToDoButton({ setEditMode, setTrashToolTip, id }) {
                 icon={<EditFilled />}
                 style={{ margin: "5px" }}
                 onClick={clickEdit}
-            ></Button>
+            />
         </Tooltip>
     )
 }
