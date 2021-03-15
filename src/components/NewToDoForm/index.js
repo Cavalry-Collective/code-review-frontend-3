@@ -4,6 +4,8 @@ import { Button, Input, Tooltip } from "antd"
 import NewToDoLayout from "../NewToDoLayout"
 import { removeAllNotifications } from "../notifications"
 
+const createId = () => (new Date() / 1).toString()
+
 NewToDoForm.propTypes = {
     addItem: PropTypes.func.isRequired,
     setEditMode: PropTypes.func.isRequired,
@@ -20,7 +22,7 @@ function NewToDoForm({ addItem, setEditMode, setTrashToolTip }) {
 
         addItem({
             title: incompleteValue,
-            id: (new Date() / 1).toString(),
+            id: createId(),
             completed: false,
         })
         setIncompleteValue("")
