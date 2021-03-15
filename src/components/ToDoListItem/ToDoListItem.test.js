@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import ToDoListItem from "."
-//import userEvent from "@testing-library/user-event"
+import { removeAllNotifications } from "../notifications"
+jest.mock("../notifications")
 
 const item = {
     title: "doesn't matter",
@@ -154,7 +155,9 @@ describe("ToDoListItem", () => {
         render(viewModeToDoItemTrashToolTipClosed)
         const checkbox = screen.getByRole("checkbox")
         userEvent.click(checkbox)
+
         expect(updateItem).toHaveBeenCalledTimes(1)
+        expect(removeAllNotifications).toHaveBeenCalledTimes(1)
         expect(setEditMode).not.toHaveBeenCalledTimes(1)
         expect(setEditMode).not.toHaveBeenCalledWith(null)
     })
@@ -164,6 +167,8 @@ describe("ToDoListItem", () => {
         const checkbox = screen.getByRole("checkbox")
         userEvent.click(checkbox)
         expect(updateItem).toHaveBeenCalledTimes(1)
+        expect(removeAllNotifications).toHaveBeenCalledTimes(1)
+
         expect(setEditMode).not.toHaveBeenCalledTimes(1)
         expect(setEditMode).not.toHaveBeenCalledWith(null)
         expect(setTrashToolTip).toHaveBeenCalledTimes(1)
@@ -178,6 +183,7 @@ describe("ToDoListItem", () => {
         userEvent.click(titleButton)
         expect(setEditMode).toHaveBeenCalledTimes(1)
         expect(setEditMode).toHaveBeenCalledWith(item.id)
+        expect(removeAllNotifications).toHaveBeenCalledTimes(1)
     })
 
     test("Trigger the expected callbacks when clickable title is clicked (trash tooltip is open)", () => {
@@ -190,5 +196,6 @@ describe("ToDoListItem", () => {
         expect(setEditMode).toHaveBeenCalledWith(item.id)
         expect(setTrashToolTip).toHaveBeenCalledTimes(1)
         expect(setTrashToolTip).toHaveBeenCalledWith(null)
+        expect(removeAllNotifications).toHaveBeenCalledTimes(1)
     })
 })
