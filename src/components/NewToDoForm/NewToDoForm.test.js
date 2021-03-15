@@ -12,7 +12,7 @@ const newToDoForm = (
 )
 
 describe("NewToDoForm", () => {
-    test("Clicking the input field will call the necessary callback functions given as prop", async () => {
+    test("Clicking the input field will call the necessary callback functions given as prop", () => {
         render(newToDoForm)
         const inputField = screen.getByRole("textbox", { value: "" })
 
@@ -22,6 +22,11 @@ describe("NewToDoForm", () => {
         expect(setEditMode).toHaveBeenCalledTimes(1)
         expect(setTrashToolTip).toHaveBeenCalledTimes(1)
         expect(addItem).not.toHaveBeenCalled()
+    })
+
+    test("Typing and clicking the button will call the necessary callback functions given as prop", () => {
+        render(newToDoForm)
+        const inputField = screen.getByRole("textbox", { value: "" })
 
         userEvent.type(inputField, newTitle)
         userEvent.click(screen.getByRole("button", { name: /add/i }))
