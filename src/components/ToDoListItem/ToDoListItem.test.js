@@ -82,6 +82,11 @@ describe("ToDoListItem", () => {
 
         const editButton = screen.queryByRole("button", { name: /edit/i })
         expect(editButton).not.toBeInTheDocument()
+
+        const trashToolTip = screen.queryByRole("tooltip", {
+            title: "Are you sure you want to delete this item?",
+        })
+        expect(trashToolTip).not.toBeInTheDocument()
     })
 
     test("Render the expected html elements when in view mode (and trash tooltip is open) and nothing more", () => {
@@ -90,26 +95,23 @@ describe("ToDoListItem", () => {
         const checkbox = screen.getByRole("checkbox")
         expect(checkbox).toBeInTheDocument()
 
-        const titleText = screen.getByText(item.title)
-        expect(titleText).toBeInTheDocument()
-
         const titleButton = screen.getByRole("button", {
             name: item.title,
         })
         expect(titleButton).toBeInTheDocument()
+
+        const editButton = screen.getByRole("button", { name: /edit/i })
+        expect(editButton).toBeInTheDocument()
 
         const deleteButton = screen.getByRole("button", {
             name: /delete item/i,
         })
         expect(deleteButton).toBeInTheDocument()
 
-        const editButton = screen.getByRole("button", { name: /edit/i })
-        expect(editButton).toBeInTheDocument()
-
-        const confirmText = screen.getByText(
-            /are you sure you want to delete this item?/i
-        )
-        expect(confirmText).toBeInTheDocument()
+        const trashToolTip = screen.getByRole("tooltip", {
+            title: "Are you sure you want to delete this item?",
+        })
+        expect(trashToolTip).toBeInTheDocument()
 
         const inputField = screen.queryByRole("textbox", { value: item.title })
         expect(inputField).not.toBeInTheDocument()
@@ -124,9 +126,6 @@ describe("ToDoListItem", () => {
         const checkbox = screen.getByRole("checkbox")
         expect(checkbox).toBeInTheDocument()
 
-        const titleText = screen.getByText(item.title)
-        expect(titleText).toBeInTheDocument()
-
         const titleButton = screen.getByRole("button", {
             name: item.title,
         })
@@ -138,10 +137,11 @@ describe("ToDoListItem", () => {
         const deleteButton = screen.getByRole("button", { name: /delete/i })
         expect(deleteButton).toBeInTheDocument()
 
-        const confirmText = screen.queryByText(
-            /are you sure you want to delete this item?/i
-        )
-        expect(confirmText).not.toBeInTheDocument()
+        const trashToolTip = screen.queryByRole("tooltip", {
+            title: "Are you sure you want to delete this item?",
+        })
+
+        expect(trashToolTip).not.toBeInTheDocument()
 
         const inputField = screen.queryByRole("textbox", { value: item.title })
         expect(inputField).not.toBeInTheDocument()
@@ -155,9 +155,8 @@ describe("ToDoListItem", () => {
         const checkbox = screen.getByRole("checkbox")
         userEvent.click(checkbox)
         expect(updateItem).toHaveBeenCalledTimes(1)
-        expect(setEditMode).not.toHaveBeenCalled()
-        expect(setTrashToolTip).toHaveBeenCalledTimes(1)
-        expect(setTrashToolTip).toHaveBeenCalledWith(null)
+        expect(setEditMode).not.toHaveBeenCalledTimes(1)
+        expect(setEditMode).not.toHaveBeenCalledWith(null)
     })
 
     test("Trigger the expected callbacks when check box is clicked (trash tooltip is open)", () => {
@@ -165,7 +164,30 @@ describe("ToDoListItem", () => {
         const checkbox = screen.getByRole("checkbox")
         userEvent.click(checkbox)
         expect(updateItem).toHaveBeenCalledTimes(1)
-        expect(setEditMode).not.toHaveBeenCalled()
+        expect(setEditMode).not.toHaveBeenCalledTimes(1)
+        expect(setEditMode).not.toHaveBeenCalledWith(null)
+        expect(setTrashToolTip).toHaveBeenCalledTimes(1)
+        expect(setTrashToolTip).toHaveBeenCalledWith(null)
+    })
+
+    test("Trigger the expected callbacks when clickable title is clicked (trash tooltip is closed)", () => {
+        render(viewModeToDoItemTrashToolTipClosed)
+        const titleButton = screen.getByRole("button", {
+            name: item.title,
+        })
+        userEvent.click(titleButton)
+        expect(setEditMode).toHaveBeenCalledTimes(1)
+        expect(setEditMode).toHaveBeenCalledWith(item.id)
+    })
+
+    test("Trigger the expected callbacks when clickable title is clicked (trash tooltip is open)", () => {
+        render(viewModeToDoItemTrashToolTipOpen)
+        const titleButton = screen.getByRole("button", {
+            name: item.title,
+        })
+        userEvent.click(titleButton)
+        expect(setEditMode).toHaveBeenCalledTimes(1)
+        expect(setEditMode).toHaveBeenCalledWith(item.id)
         expect(setTrashToolTip).toHaveBeenCalledTimes(1)
         expect(setTrashToolTip).toHaveBeenCalledWith(null)
     })
