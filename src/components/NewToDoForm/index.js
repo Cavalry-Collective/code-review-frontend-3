@@ -2,14 +2,15 @@ import { useState } from "react"
 import PropTypes from "prop-types"
 import { Button, Input, Tooltip } from "antd"
 import NewToDoLayout from "../NewToDoLayout"
+import { removeAllNotifications } from "../notifications"
 
 NewToDoForm.propTypes = {
     addItem: PropTypes.func.isRequired,
-    removeEditMode: PropTypes.func.isRequired,
-    removeTrashToolTip: PropTypes.func.isRequired,
+    setEditMode: PropTypes.func.isRequired,
+    setTrashToolTip: PropTypes.func.isRequired,
 }
 
-function NewToDoForm({ addItem, removeEditMode, removeTrashToolTip }) {
+function NewToDoForm({ addItem, setEditMode, setTrashToolTip }) {
     const [incompleteValue, setIncompleteValue] = useState("")
 
     const onSubmit = () => {
@@ -26,8 +27,9 @@ function NewToDoForm({ addItem, removeEditMode, removeTrashToolTip }) {
     }
 
     const onFocus = () => {
-        removeEditMode()
-        removeTrashToolTip()
+        setEditMode(null)
+        setTrashToolTip(null)
+        removeAllNotifications()
     }
 
     const disableSubmit = incompleteValue === ""

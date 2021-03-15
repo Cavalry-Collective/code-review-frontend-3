@@ -4,6 +4,7 @@ import EditView from "../EditView"
 import DeleteToDoButton from "../DeleteToDoButton"
 import EditToDoButton from "../EditToDoButton"
 import ToDoItemLayout from "../ToDoItemLayout"
+import { removeAllNotifications } from "../notifications"
 
 const listItemStyle = {
     listStyleType: "none",
@@ -28,11 +29,9 @@ const itemShape = PropTypes.shape({
 ToDoListItem.propTypes = {
     item: itemShape.isRequired,
     updateItem: PropTypes.func.isRequired,
-    removeEditMode: PropTypes.func.isRequired,
     removeItem: PropTypes.func.isRequired,
     setEditMode: PropTypes.func.isRequired,
     isEditMode: PropTypes.bool.isRequired,
-    removeTrashToolTip: PropTypes.func.isRequired,
     setTrashToolTip: PropTypes.func.isRequired,
     isTrashToolTipOpen: PropTypes.bool.isRequired,
 }
@@ -42,15 +41,14 @@ function ToDoListItem({
     removeItem,
     updateItem,
     isEditMode,
-    removeEditMode,
     setEditMode,
-    removeTrashToolTip,
     setTrashToolTip,
     isTrashToolTipOpen,
 }) {
     const toggleCheckBox = () => {
         updateItem({ ...item, completed: !item.completed })
-        removeTrashToolTip()
+        setTrashToolTip(null)
+        removeAllNotifications()
     }
 
     const checkBox = (
@@ -64,7 +62,8 @@ function ToDoListItem({
 
     const onClickTitle = () => {
         setEditMode(item.id)
-        removeTrashToolTip()
+        setTrashToolTip(null)
+        removeAllNotifications()
     }
 
     const clickableToDoTitle = (
@@ -74,17 +73,16 @@ function ToDoListItem({
     )
 
     const editToDoButton = (
-        <EditToDoButton {...{ setEditMode, removeTrashToolTip, id: item.id }} />
+        <EditToDoButton {...{ setEditMode, setTrashToolTip, id: item.id }} />
     )
 
     const deleteToDoButton = (
         <DeleteToDoButton
             {...{
                 isTrashToolTipOpen,
-                removeTrashToolTip,
                 removeItem,
                 setTrashToolTip,
-                removeEditMode,
+                setEditMode,
                 id: item.id,
             }}
         />
@@ -101,7 +99,7 @@ function ToDoListItem({
         />
     )
 
-    const editView = <EditView {...{ item, updateItem, removeEditMode }} />
+    const editView = <EditView {...{ item, updateItem, setEditMode }} />
 
     return (
         <List.Item style={listItemStyle}>

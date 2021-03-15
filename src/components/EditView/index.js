@@ -12,10 +12,10 @@ const itemShape = PropTypes.shape({
 EditView.propTypes = {
     item: itemShape.isRequired,
     updateItem: PropTypes.func.isRequired,
-    removeEditMode: PropTypes.func.isRequired,
+    setEditMode: PropTypes.func.isRequired,
 }
 
-function EditView({ item, updateItem, removeEditMode }) {
+function EditView({ item, updateItem, setEditMode }) {
     const [incompleteValue, setIncompleteValue] = useState(item.title)
 
     const disableSubmit =
@@ -63,7 +63,7 @@ function EditView({ item, updateItem, removeEditMode }) {
 
     const cancelButton = (
         <Tooltip title={cancelToolTipText}>
-            <Button onClick={removeEditMode}>Cancel</Button>
+            <Button onClick={() => setEditMode(null)}>Cancel</Button>
         </Tooltip>
     )
 
