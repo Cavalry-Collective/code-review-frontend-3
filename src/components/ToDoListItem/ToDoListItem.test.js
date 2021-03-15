@@ -153,33 +153,31 @@ describe("ToDoListItem", () => {
 
     test("Trigger the expected callbacks when check box is clicked (trash tooltip is closed)", () => {
         render(viewModeToDoItemTrashToolTipClosed)
-        const checkbox = screen.getByRole("checkbox")
+        const checkbox = screen.getByRole("checkbox", { title: item.title })
         userEvent.click(checkbox)
 
         expect(updateItem).toHaveBeenCalledTimes(1)
+        expect(setEditMode).toHaveBeenCalledTimes(1)
+        expect(setEditMode).toHaveBeenCalledWith(null)
         expect(removeAllNotifications).toHaveBeenCalledTimes(1)
-        expect(setEditMode).not.toHaveBeenCalledTimes(1)
-        expect(setEditMode).not.toHaveBeenCalledWith(null)
     })
 
     test("Trigger the expected callbacks when check box is clicked (trash tooltip is open)", () => {
         render(viewModeToDoItemTrashToolTipOpen)
-        const checkbox = screen.getByRole("checkbox")
+        const checkbox = screen.getByRole("checkbox", { title: item.title })
         userEvent.click(checkbox)
-        expect(updateItem).toHaveBeenCalledTimes(1)
-        expect(removeAllNotifications).toHaveBeenCalledTimes(1)
 
-        expect(setEditMode).not.toHaveBeenCalledTimes(1)
-        expect(setEditMode).not.toHaveBeenCalledWith(null)
+        expect(updateItem).toHaveBeenCalledTimes(1)
+        expect(setEditMode).toHaveBeenCalledTimes(1)
+        expect(setEditMode).toHaveBeenCalledWith(null)
         expect(setTrashToolTip).toHaveBeenCalledTimes(1)
         expect(setTrashToolTip).toHaveBeenCalledWith(null)
+        expect(removeAllNotifications).toHaveBeenCalledTimes(1)
     })
 
     test("Trigger the expected callbacks when clickable title is clicked (trash tooltip is closed)", () => {
         render(viewModeToDoItemTrashToolTipClosed)
-        const titleButton = screen.getByRole("button", {
-            name: item.title,
-        })
+        const titleButton = screen.getByRole("button", { name: item.title })
         userEvent.click(titleButton)
         expect(setEditMode).toHaveBeenCalledTimes(1)
         expect(setEditMode).toHaveBeenCalledWith(item.id)
@@ -188,9 +186,7 @@ describe("ToDoListItem", () => {
 
     test("Trigger the expected callbacks when clickable title is clicked (trash tooltip is open)", () => {
         render(viewModeToDoItemTrashToolTipOpen)
-        const titleButton = screen.getByRole("button", {
-            name: item.title,
-        })
+        const titleButton = screen.getByRole("button", { name: item.title })
         userEvent.click(titleButton)
         expect(setEditMode).toHaveBeenCalledTimes(1)
         expect(setEditMode).toHaveBeenCalledWith(item.id)
