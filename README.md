@@ -9,6 +9,7 @@
 ## Notes
 
 Important! Currently using a custom hook that simulates interacting with a backend. It uses local storage, `setTimeOut` for delay (350ms), and `20%` chance the request will fail with `Math.random()`. For more information, checkout the source code for the custom [`mockFetchToDoList`](./src/hooks/index.js) hook.
+Mr Chan told me that implementing the graphql backend is optional, I wrote some [backend](https://github.com/mithi/quick-and-dirty) code , but I decided that instead of juggling the two, I wanted to focus on creating a frontend I'm proud of, given the limited time! 
 
 ## Preview
 
@@ -23,6 +24,8 @@ Important! Currently using a custom hook that simulates interacting with a backe
 -   [x] Remove a To-Do from the list
 -   [x] When page is refreshed, list will not be reset
 -   [ ] Fetch and save data to Node.js server using GraphQL
+      - As said earlier, using a custom hook that simulates interacting with a backend. It uses local storage, `setTimeOut` for delay (350ms), and `20%` chance the request will fail with `Math.random()`. For more information, checkout the source code for the custom [`mockFetchToDoList`](./src/hooks/index.js) hook. A [quick and dirty backend can be found here](https://github.com/mithi/quick-and-dirty), but it's not at all connected to this app. 
+
 
 ## Specifications
 
@@ -32,8 +35,13 @@ Important! Currently using a custom hook that simulates interacting with a backe
 -   [x] Follow proper code styles (e.g. Airbnb Javascript style guide)
 -   [x] Use linting
 -   [x] Use static type checking, e.g. Typescript, Flow, Proptypes
--   [ ] For back-end, write GraphQL endpoints using Apollo Server
+-   [x] For back-end, write GraphQL endpoints using Apollo Server
+     - When I spoke ko Mr Chan, he said this was optional, and just play around this if I'm feeling adventurous :D 
+     - https://github.com/mithi/quick-and-dirty (I crammed this in under an hour, it's not connected to the app)
 -   [x] (Optional) Deploy
+      - https://to-do-client.vercel.app/ 
+      - https://quick-and-dirty-to-do.herokuapp.com/graphql
+      - (quick and dirty bare minimum graphql api for todo app) 
 -   [ ] (Optional) Secure backend endpoints with OAuth2
 
 ## Submission Guidelines
