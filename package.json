@@ -16,7 +16,8 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test --verbose --coverage",
+        "test": "react-scripts test",
+        "check-format": "prettier --config ./.prettierrc.yml --check \"./src/*\"",
         "eject": "react-scripts eject"
     },
     "eslintConfig": {
