@@ -10,15 +10,6 @@ import App from "../App"
 import { sometimesRejects, wait } from "../hooks/utils"
 jest.mock("../hooks/utils")
 
-global.matchMedia =
-    global.matchMedia ||
-    function () {
-        return {
-            addListener: jest.fn(),
-            removeListener: jest.fn(),
-        }
-    }
-
 const newToDoMessage = "I'm the new todo message"
 test("Add item", async () => {
     sometimesRejects.mockReturnValue({ isRejected: false, errorMessage: null })
