@@ -5,6 +5,7 @@ import DeleteItemButton from "../DeleteItemButton"
 import EditItemButton from "../EditItemButton"
 import Layout from "./Layout"
 import { removeAllNotifications } from "../notifications"
+import { itemShape } from "../commonPropTypes"
 
 const listItemStyle = {
     listStyleType: "none",
@@ -20,12 +21,6 @@ const invisibleButtonStyle = {
     border: "1px dotted rgba(200, 200,200, 0.5)",
     cursor: "pointer",
 }
-
-const itemShape = PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    completed: PropTypes.bool.isRequired,
-})
 
 ItemView.propTypes = {
     item: itemShape.isRequired,

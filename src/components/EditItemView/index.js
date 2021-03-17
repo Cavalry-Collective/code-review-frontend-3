@@ -1,13 +1,8 @@
 import { useState } from "react"
 import PropTypes from "prop-types"
 import { Button, Tooltip, Input } from "antd"
+import { itemShape } from "../commonPropTypes"
 import Layout from "./Layout"
-
-const itemShape = PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    completed: PropTypes.bool.isRequired,
-})
 
 EditItemView.propTypes = {
     item: itemShape.isRequired,
