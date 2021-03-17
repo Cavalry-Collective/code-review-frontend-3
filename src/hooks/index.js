@@ -35,42 +35,51 @@ const INITIAL_STATUS = {
 }
 
 const statusReducer = (previousStatus, action) => {
-    const loadingParams = {
-        errorMessage: null,
-        statusType: statusTypes.loading,
-        payLoad: action.payLoad,
-        action: action.type,
+    const isToStartAction = [
+        actionTypes.remove,
+        actionTypes.add,
+        actionTypes.update,
+    ].includes(action.type)
+
+    if (isToStartAction) {
+        const loadingParams = {
+            errorMessage: null,
+            statusType: statusTypes.loading,
+            payLoad: action.payLoad,
+            action: action.type,
+        }
+        return loadingParams
     }
 
-    if (action.type === actionTypes.add) {
-        return loadingParams
-    } else if (action.type === actionTypes.remove) {
-        return loadingParams
-    } else if (action.type === actionTypes.update) {
-        return loadingParams
-    } else if (action.type === actionTypes.retry) {
+    if (action.type === actionTypes.retry) {
         return {
             ...previousStatus,
             statusType: statusTypes.loading,
             errorMessage: null,
         }
-    } else if (action.type === actionTypes.reset) {
+    }
+
+    if (action.type === actionTypes.reset) {
         return INITIAL_STATUS
-    } else if (action.type === actionTypes.finish) {
+    }
+
+    if (action.type === actionTypes.finish) {
         return {
             ...previousStatus,
             errorMessage: null,
             statusType: statusTypes.success,
         }
-    } else if (action.type === actionTypes.reject) {
+    }
+
+    if (action.type === actionTypes.reject) {
         return {
             ...previousStatus,
             statusType: statusTypes.error,
             errorMessage: action.payLoad.errorMessage,
         }
-    } else {
-        throw new Error(`Unhandle actionType: ${action}`)
     }
+
+    throw new Error(`Unhandle actionType: ${action}`)
 }
 
 const fulfillRequest = (status, setItems) => {
@@ -86,6 +95,7 @@ const fulfillRequest = (status, setItems) => {
         throw new Error(`Unhandle actionType: ${action}`)
     }
 }
+
 function useMockFetchToDo() {
     const [toDoItems, setToDoItems] = useLocalStorageState("toDoList", [])
     const [status, statusDispatch] = useReducer(statusReducer, INITIAL_STATUS)
@@ -131,14 +141,7 @@ function useMockFetchToDo() {
     return [
         toDoItems,
         { updateItem, addItem, removeItem, reset, retry },
-        {
-            isLoading: statusType === statusTypes.loading,
-            isSuccess: statusType === statusTypes.success,
-            isError: statusType === statusTypes.error,
-            isIdle: statusType === statusTypes.idle,
-            errorMessage: errorMessage,
-            statusType,
-        },
+        { errorMessage, statusType },
     ]
 }
 
