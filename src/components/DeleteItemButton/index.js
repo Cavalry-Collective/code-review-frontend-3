@@ -3,7 +3,7 @@ import { Button, Popconfirm } from "antd"
 import { DeleteFilled } from "@ant-design/icons"
 import { removeAllNotifications } from "../notifications"
 
-DeleteToDoButton.propTypes = {
+DeleteItemButton.propTypes = {
     removeItem: PropTypes.func.isRequired,
     setEditMode: PropTypes.func.isRequired,
     setTrashToolTip: PropTypes.func.isRequired,
@@ -11,7 +11,7 @@ DeleteToDoButton.propTypes = {
     id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 }
 
-function DeleteToDoButton({
+function DeleteItemButton({
     isTrashToolTipOpen,
     removeItem,
     setTrashToolTip,
@@ -51,4 +51,4 @@ function DeleteToDoButton({
     )
 }
 
-export default DeleteToDoButton
+export default DeleteItemButton

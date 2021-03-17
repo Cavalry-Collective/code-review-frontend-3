@@ -3,13 +3,13 @@ import { Button, Tooltip } from "antd"
 import { EditFilled } from "@ant-design/icons"
 import { removeAllNotifications } from "../notifications"
 
-EditToDoButton.propTypes = {
+EditItemButton.propTypes = {
     setEditMode: PropTypes.func.isRequired,
     setTrashToolTip: PropTypes.func.isRequired,
     id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 }
 
-function EditToDoButton({ setEditMode, setTrashToolTip, id }) {
+function EditItemButton({ setEditMode, setTrashToolTip, id }) {
     const clickEdit = () => {
         setEditMode(id)
         setTrashToolTip(null)
@@ -27,4 +27,4 @@ function EditToDoButton({ setEditMode, setTrashToolTip, id }) {
     )
 }
 
-export default EditToDoButton
+export default EditItemButton

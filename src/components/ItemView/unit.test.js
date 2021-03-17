@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import ToDoListItem from "."
+import ItemView from "."
 import { removeAllNotifications } from "../notifications"
 jest.mock("../notifications")
 
@@ -16,7 +16,7 @@ const setEditMode = jest.fn()
 const setTrashToolTip = jest.fn()
 
 const viewModeToDoItemTrashToolTipClosed = (
-    <ToDoListItem
+    <ItemView
         {...{
             item,
             removeItem,
@@ -30,7 +30,7 @@ const viewModeToDoItemTrashToolTipClosed = (
 )
 
 const viewModeToDoItemTrashToolTipOpen = (
-    <ToDoListItem
+    <ItemView
         {...{
             item,
             removeItem,
@@ -44,7 +44,7 @@ const viewModeToDoItemTrashToolTipOpen = (
 )
 
 const editModeToDoItem = (
-    <ToDoListItem
+    <ItemView
         {...{
             item,
             removeItem,

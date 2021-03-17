@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import EditToDoButton from "."
+import EditItemButton from "."
 import { removeAllNotifications } from "../notifications"
 jest.mock("../notifications")
 
@@ -8,31 +8,29 @@ const setEditMode = jest.fn()
 const setTrashToolTip = jest.fn()
 const id = "doesn't matter"
 
-const editToDoButton = (
-    <EditToDoButton {...{ setEditMode, setTrashToolTip, id }} />
-)
-describe("EditToDoButton", () => {
-    test("Components of edit button are present", () => {
-        render(editToDoButton)
+const editButton = <EditItemButton {...{ setEditMode, setTrashToolTip, id }} />
+describe("EditItemButton", () => {
+    test("All expected elements within it are present", () => {
+        render(editButton)
 
-        const editButton = screen.getByRole("button", {
+        const button = screen.getByRole("button", {
             name: /edit/i,
         })
-        expect(editButton).toBeInTheDocument()
+        expect(button).toBeInTheDocument()
         const editIcon = screen.getByRole("img", { name: /edit/i })
         expect(editIcon).toBeInTheDocument()
-        expect(editButton).toContainElement(editIcon)
-        expect(editButton).not.toBeDisabled()
+        expect(button).toContainElement(editIcon)
+        expect(button).not.toBeDisabled()
     })
 
-    test("Clicking the edit button will trigger the necessary callbacks", () => {
-        render(editToDoButton)
+    test("Clicking it  will trigger the necessary callbacks", () => {
+        render(editButton)
 
-        const editButton = screen.getByRole("button", {
+        const button = screen.getByRole("button", {
             name: /edit/i,
         })
 
-        userEvent.click(editButton)
+        userEvent.click(button)
 
         expect(setEditMode).toBeCalledTimes(1)
         expect(setEditMode).toBeCalledWith(id)

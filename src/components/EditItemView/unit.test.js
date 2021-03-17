@@ -14,7 +14,7 @@ const oldItem = {
 
 const newTitle = "the new title"
 
-describe("EditView", () => {
+describe("EditItemView", () => {
     test("Typing a new title and clicking the save button updates the item and goes out of edit mode", async () => {
         render(
             <EditView

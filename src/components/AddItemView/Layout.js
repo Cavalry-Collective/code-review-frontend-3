@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 
-const newToDoContainerStyle = {
+const containerStyle = {
     display: "flex",
     margin: "10px",
     width: "calc(80vw - 60px)",
@@ -8,24 +8,24 @@ const newToDoContainerStyle = {
     alignItems: "center",
 }
 
-const buttonContainerStyle = {
+const centered = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
 }
 
-NewToDoLayout.propTypes = {
+Layout.propTypes = {
     submitButton: PropTypes.node,
     input: PropTypes.node,
 }
 
-function NewToDoLayout({ submitButton, input }) {
+function Layout({ submitButton, input }) {
     return (
-        <div style={newToDoContainerStyle}>
+        <div style={containerStyle}>
             <div style={{ flex: 1 }}>{input}</div>
-            <div style={buttonContainerStyle}>{submitButton}</div>
+            <div style={centered}>{submitButton}</div>
         </div>
     )
 }
 
-export default NewToDoLayout
+export default Layout

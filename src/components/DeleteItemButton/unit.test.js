@@ -36,7 +36,7 @@ const closedDeleteToDoButton = (
     />
 )
 
-describe("DeleteToDoButton", () => {
+describe("DeleteItemButton", () => {
     test("When opened it has the necessary nodes and their state", async () => {
         render(openedDeleteToDoButton)
 

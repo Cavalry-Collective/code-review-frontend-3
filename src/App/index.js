@@ -1,15 +1,15 @@
 import "antd/dist/antd.css"
 import { useState, useEffect } from "react"
 import { List } from "antd"
-import NewToDoForm from "./components/NewToDoForm"
-import ToDoListItem from "./components/ToDoListItem"
-import { useMockFetchToDo } from "./hooks/"
+import AddItemView from "../components/AddItemView"
+import ItemView from "../components/ItemView"
+import { useMockFetchToDo } from "../hooks"
 import {
     loadingNotification,
     errorNotification,
     successNotification,
-} from "./components/notifications"
-import AppLayout from "./AppLayout"
+} from "../components/notifications"
+import Layout from "./Layout"
 
 function App() {
     let [
@@ -32,7 +32,7 @@ function App() {
 
     const listItemRenderFunction = item => {
         return (
-            <ToDoListItem
+            <ItemView
                 item={item}
                 isEditMode={currentEditModeItemId === item.id}
                 removeItem={removeItem}
@@ -44,14 +44,14 @@ function App() {
         )
     }
 
-    const newToDoForm = (
-        <NewToDoForm
+    const addItemView = (
+        <AddItemView
             addItem={addItem}
             setEditMode={setCurrentEditModeItemId}
             setTrashToolTip={setCurrentTrashToolTipOpen}
         />
     )
-    const toDoList = (
+    const itemList = (
         <List
             size="large"
             style={{ width: "100%" }}
@@ -60,7 +60,7 @@ function App() {
         />
     )
 
-    return <AppLayout {...{ newToDoForm, toDoList }} />
+    return <Layout {...{ addItemView, itemList }} />
 }
 
 export default App

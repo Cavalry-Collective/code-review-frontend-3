@@ -21,7 +21,7 @@ global.matchMedia =
 
 const newToDoMessage = "I'm the new todo message"
 
-test("Add then Remove Item", async () => {
+test("Add then remove item", async () => {
     sometimesRejects.mockReturnValue({ isRejected: false, errorMessage: null })
 
     render(<App />)

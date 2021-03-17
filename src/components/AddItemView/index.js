@@ -1,18 +1,18 @@
 import { useState } from "react"
 import PropTypes from "prop-types"
 import { Button, Input, Tooltip } from "antd"
-import NewToDoLayout from "../NewToDoLayout"
+import Layout from "./Layout.js"
 import { removeAllNotifications } from "../notifications"
 
 const createId = () => (new Date() / 1).toString()
 
-NewToDoForm.propTypes = {
+AddItemView.propTypes = {
     addItem: PropTypes.func.isRequired,
     setEditMode: PropTypes.func.isRequired,
     setTrashToolTip: PropTypes.func.isRequired,
 }
 
-function NewToDoForm({ addItem, setEditMode, setTrashToolTip }) {
+function AddItemView({ addItem, setEditMode, setTrashToolTip }) {
     const [incompleteValue, setIncompleteValue] = useState("")
 
     const onSubmit = () => {
@@ -62,7 +62,7 @@ function NewToDoForm({ addItem, setEditMode, setTrashToolTip }) {
         </Tooltip>
     )
 
-    return <NewToDoLayout {...{ input, submitButton }} />
+    return <Layout {...{ input, submitButton }} />
 }
 
-export default NewToDoForm
+export default AddItemView
