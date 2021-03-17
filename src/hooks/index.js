@@ -35,27 +35,19 @@ const INITIAL_STATUS = {
 }
 
 const statusReducer = (previousStatus, action) => {
+    const loadingParams = {
+        errorMessage: null,
+        statusType: statusTypes.loading,
+        payLoad: action.payLoad,
+        action: action.type,
+    }
+
     if (action.type === actionTypes.add) {
-        return {
-            errorMessage: null,
-            statusType: statusTypes.loading,
-            payLoad: action.payLoad,
-            action: actionTypes.add,
-        }
+        return loadingParams
     } else if (action.type === actionTypes.remove) {
-        return {
-            errorMessage: null,
-            statusType: statusTypes.loading,
-            payLoad: action.payLoad,
-            action: actionTypes.remove,
-        }
+        return loadingParams
     } else if (action.type === actionTypes.update) {
-        return {
-            errorMessage: null,
-            statusType: statusTypes.loading,
-            action: actionTypes.update,
-            payLoad: action.payLoad,
-        }
+        return loadingParams
     } else if (action.type === actionTypes.retry) {
         return {
             ...previousStatus,
@@ -150,4 +142,4 @@ function useMockFetchToDo() {
     ]
 }
 
-export { useLocalStorageState, useMockFetchToDo }
+export { useLocalStorageState, useMockFetchToDo, statusTypes }
