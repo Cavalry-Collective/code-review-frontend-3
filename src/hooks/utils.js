@@ -1,4 +1,5 @@
 const SUCCESS_RATE = 0.8
+const DELAY = 500
 
 const sometimesRejects = () => {
     const isRejected = Math.random() > SUCCESS_RATE
@@ -11,4 +12,6 @@ const sometimesRejects = () => {
     }
 }
 
-export { sometimesRejects }
+const wait = () => new Promise(resolve => setTimeout(resolve, DELAY))
+
+export { sometimesRejects, wait }
