@@ -46,9 +46,7 @@ describe("DeleteItemButton", () => {
         const trashIcon = screen.getByRole("img", { name: /delete/i })
         expect(trashIcon).toBeInTheDocument()
 
-        const confirmToolTip = screen.getByRole("tooltip", {
-            title: /Are you sure you want to delete this item?/i,
-        })
+        const confirmToolTip = screen.getByRole("tooltip")
         expect(confirmToolTip).toBeInTheDocument()
 
         expect(deleteButton).toContainElement(trashIcon)

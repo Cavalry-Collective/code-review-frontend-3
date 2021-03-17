@@ -84,9 +84,7 @@ describe("ToDoListItem", () => {
         const editButton = screen.queryByRole("button", { name: /edit/i })
         expect(editButton).not.toBeInTheDocument()
 
-        const trashToolTip = screen.queryByRole("tooltip", {
-            title: "Are you sure you want to delete this item?",
-        })
+        const trashToolTip = screen.queryByRole("tooltip")
         expect(trashToolTip).not.toBeInTheDocument()
     })
 
@@ -109,9 +107,7 @@ describe("ToDoListItem", () => {
         })
         expect(deleteButton).toBeInTheDocument()
 
-        const trashToolTip = screen.getByRole("tooltip", {
-            title: "Are you sure you want to delete this item?",
-        })
+        const trashToolTip = screen.getByRole("tooltip")
         expect(trashToolTip).toBeInTheDocument()
 
         const inputField = screen.queryByRole("textbox")
@@ -138,9 +134,7 @@ describe("ToDoListItem", () => {
         const deleteButton = screen.getByRole("button", { name: /delete/i })
         expect(deleteButton).toBeInTheDocument()
 
-        const trashToolTip = screen.queryByRole("tooltip", {
-            title: "Are you sure you want to delete this item?",
-        })
+        const trashToolTip = screen.queryByRole("tooltip")
 
         expect(trashToolTip).not.toBeInTheDocument()
 

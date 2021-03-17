@@ -21,9 +21,7 @@ test("Add then remove item", async () => {
         expect(screen.getByText(/things to do/i)).toBeInTheDocument()
     )
 
-    const inputField = screen.getByRole("textbox", {
-        placeholder: /what do you need to do?/i,
-    })
+    const inputField = screen.getByPlaceholderText(/what do you need to do?/i)
 
     userEvent.type(inputField, newToDoMessage)
 

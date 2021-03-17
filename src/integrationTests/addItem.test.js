@@ -20,10 +20,10 @@ test("Add item", async () => {
         expect(screen.getByText(/things to do/i)).toBeInTheDocument()
     )
 
-    const inputField = screen.getByRole("textbox", {
-        placeholder: /what do you need to do?/i,
-    })
+    const inputField = screen.getByPlaceholderText(/what do you need to do?/i)
     expect(inputField).toBeInTheDocument()
+    expect(inputField).toHaveAttribute("type", "text")
+    expect(inputField).toHaveAttribute("value", "")
 
     expect(
         screen.queryByRole("button", { name: newToDoMessage })
@@ -31,12 +31,13 @@ test("Add item", async () => {
 
     userEvent.type(inputField, newToDoMessage)
 
-    const filledInputField = screen.getByRole("textbox", {
-        placeholder: /what do you need to do?/i,
-        value: newToDoMessage,
-    })
+    const filledInputField = screen.getByPlaceholderText(
+        /what do you need to do?/i
+    )
 
     expect(filledInputField).toBeInTheDocument()
+    expect(filledInputField).toHaveAttribute("type", "text")
+    expect(filledInputField).toHaveAttribute("value", newToDoMessage)
 
     const addButton = screen.getByRole("button", { name: /add/i })
     expect(addButton).toBeInTheDocument()
