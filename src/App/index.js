@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { List } from "antd"
 import AddItemView from "../components/AddItemView"
 import ItemView from "../components/ItemView"
-import { useMockFetchToDo } from "../hooks"
+import { useMockFetchToDo, statusTypes as fetchStatusTypes } from "../hooks"
 import {
     loadingNotification,
     errorNotification,
@@ -11,24 +11,28 @@ import {
 } from "../components/notifications"
 import Layout from "./Layout"
 
+const showNotification = (fetchStatus, errorMessage, reset) => {
+    if (fetchStatus === fetchStatusTypes.loading) {
+        loadingNotification()
+    } else if (fetchStatus === fetchStatusTypes.error) {
+        errorNotification(errorMessage, reset)
+    } else if (fetchStatus === fetchStatusTypes.success) {
+        successNotification(reset)
+    }
+}
+
 function App() {
     let [
         toDoItems,
         { updateItem, addItem, removeItem, reset },
-        { isLoading, isSuccess, isError, errorMessage },
+        { statusType: fetchStatus, errorMessage },
     ] = useMockFetchToDo()
     let [currentEditModeItemId, setCurrentEditModeItemId] = useState(null)
     let [currentTrashToolTipOpen, setCurrentTrashToolTipOpen] = useState(null)
 
     useEffect(() => {
-        if (isLoading) {
-            loadingNotification()
-        } else if (isError) {
-            errorNotification(errorMessage, reset)
-        } else if (isSuccess) {
-            successNotification(reset)
-        }
-    }, [isLoading, isError, isSuccess, errorMessage, reset])
+        showNotification(fetchStatus, reset, errorMessage)
+    }, [fetchStatus, errorMessage, reset])
 
     const listItemRenderFunction = item => {
         return (
@@ -51,6 +55,7 @@ function App() {
             setTrashToolTip={setCurrentTrashToolTipOpen}
         />
     )
+
     const itemList = (
         <List
             size="large"
