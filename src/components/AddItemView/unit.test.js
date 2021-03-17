@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react"
-import NewToDoForm from "."
+import AddItemView from "."
 import userEvent from "@testing-library/user-event"
 import { removeAllNotifications } from "../notifications"
 jest.mock("../notifications")
@@ -10,7 +10,7 @@ const setEditMode = jest.fn()
 const setTrashToolTip = jest.fn()
 
 const addItemView = (
-    <NewToDoForm {...{ addItem, setEditMode, setTrashToolTip }} />
+    <AddItemView {...{ addItem, setEditMode, setTrashToolTip }} />
 )
 
 describe("AddItemView", () => {

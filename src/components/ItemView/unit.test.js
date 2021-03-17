@@ -57,7 +57,7 @@ const editModeToDoItem = (
     />
 )
 
-describe("ToDoListItem", () => {
+describe("ItemView", () => {
     test("Render the expected html elements when in edit mode and nothing more", () => {
         render(editModeToDoItem)
 

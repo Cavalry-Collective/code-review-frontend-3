@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import DeleteToDoButton from "."
+import DeleteItemButton from "."
 import { removeAllNotifications } from "../notifications"
 jest.mock("../notifications")
 
@@ -13,7 +13,7 @@ const setEditMode = jest.fn()
 const id = createId()
 
 const openedDeleteToDoButton = (
-    <DeleteToDoButton
+    <DeleteItemButton
         {...{
             isTrashToolTipOpen: true,
             removeItem,
@@ -25,7 +25,7 @@ const openedDeleteToDoButton = (
 )
 
 const closedDeleteToDoButton = (
-    <DeleteToDoButton
+    <DeleteItemButton
         {...{
             isTrashToolTipOpen: false,
             removeItem,

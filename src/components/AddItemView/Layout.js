@@ -14,10 +14,7 @@ const centered = {
     alignItems: "center",
 }
 
-Layout.propTypes = {
-    submitButton: PropTypes.node,
-    input: PropTypes.node,
-}
+Layout.propTypes = { submitButton: PropTypes.node, input: PropTypes.node }
 
 function Layout({ submitButton, input }) {
     return (

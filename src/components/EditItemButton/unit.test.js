@@ -13,9 +13,7 @@ describe("EditItemButton", () => {
     test("All expected elements within it are present", () => {
         render(editButton)
 
-        const button = screen.getByRole("button", {
-            name: /edit/i,
-        })
+        const button = screen.getByRole("button", { name: /edit/i })
         expect(button).toBeInTheDocument()
         const editIcon = screen.getByRole("img", { name: /edit/i })
         expect(editIcon).toBeInTheDocument()
@@ -26,9 +24,7 @@ describe("EditItemButton", () => {
     test("Clicking it  will trigger the necessary callbacks", () => {
         render(editButton)
 
-        const button = screen.getByRole("button", {
-            name: /edit/i,
-        })
+        const button = screen.getByRole("button", { name: /edit/i })
 
         userEvent.click(button)
 
