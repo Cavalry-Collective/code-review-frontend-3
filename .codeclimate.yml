@@ -12,13 +12,13 @@ checks:
             threshold: 5
     file-lines:
         config:
-            threshold: 250
+            threshold: 180
     method-complexity:
         config:
             threshold: 6
     method-count:
         config:
-            threshold: 20
+            threshold: 18
     method-lines:
         config:
             threshold: 40
