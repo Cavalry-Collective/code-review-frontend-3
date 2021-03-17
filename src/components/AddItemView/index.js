@@ -1,6 +1,6 @@
 import { useState } from "react"
 import PropTypes from "prop-types"
-import { Button, Input, Tooltip } from "antd"
+import { Button, Input } from "antd"
 import Layout from "./Layout.js"
 import { removeAllNotifications } from "../notifications"
 
@@ -32,10 +32,6 @@ function AddItemView({ addItem, setEditMode, setTrashToolTip }) {
 
     const disableSubmit = incompleteValue === ""
 
-    const toolTipText = disableSubmit
-        ? "Please enter text before submitting"
-        : "Add a task"
-
     const input = (
         <Input
             rules={[{ required: true, message: "Required" }]}
@@ -50,16 +46,14 @@ function AddItemView({ addItem, setEditMode, setTrashToolTip }) {
     )
 
     const submitButton = (
-        <Tooltip title={toolTipText}>
-            <Button
-                type="primary"
-                style={{ margin: "5px" }}
-                onClick={onSubmit}
-                disabled={disableSubmit}
-            >
-                Add
-            </Button>
-        </Tooltip>
+        <Button
+            type="primary"
+            style={{ margin: "5px" }}
+            onClick={onSubmit}
+            disabled={disableSubmit}
+        >
+            Add
+        </Button>
     )
 
     return <Layout {...{ input, submitButton }} />
