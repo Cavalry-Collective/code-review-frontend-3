@@ -7,7 +7,7 @@ import {
 import userEvent from "@testing-library/user-event"
 import App from "../App"
 
-import { sometimesRejects } from "../hooks/utils"
+import { sometimesRejects, wait } from "../hooks/utils"
 jest.mock("../hooks/utils")
 
 global.matchMedia =
@@ -23,6 +23,7 @@ const newToDoMessage = "I'm the new todo message"
 
 test("Add then remove item", async () => {
     sometimesRejects.mockReturnValue({ isRejected: false, errorMessage: null })
+    wait.mockReturnValue(null)
 
     render(<App />)
     await waitFor(() =>
@@ -39,9 +40,7 @@ test("Add then remove item", async () => {
 
     userEvent.click(addButton)
 
-    await waitForElementToBeRemoved(() => screen.getByText(/syncing server/i), {
-        timeout: 5000,
-    })
+    await waitForElementToBeRemoved(() => screen.getByText(/syncing server/i))
 
     const deleteButton = screen.getByRole("button", { name: /delete/i })
 
@@ -57,9 +56,7 @@ test("Add then remove item", async () => {
 
     userEvent.click(okText.parentElement)
 
-    await waitForElementToBeRemoved(() => screen.getByText(newToDoMessage), {
-        timeout: 5000,
-    })
+    await waitForElementToBeRemoved(() => screen.getByText(newToDoMessage))
 
     expect(screen.getByText(/request successful/i)).toBeInTheDocument()
 })
