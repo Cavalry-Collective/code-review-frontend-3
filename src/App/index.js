@@ -31,7 +31,7 @@ function App() {
     let [currentTrashToolTipOpen, setCurrentTrashToolTipOpen] = useState(null)
 
     useEffect(() => {
-        showNotification(fetchStatus, reset, errorMessage)
+        showNotification(fetchStatus, errorMessage, reset)
     }, [fetchStatus, errorMessage, reset])
 
     const listItemRenderFunction = item => {
