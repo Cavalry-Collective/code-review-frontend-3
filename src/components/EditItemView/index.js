@@ -1,21 +1,16 @@
 import { useState } from "react"
 import PropTypes from "prop-types"
 import { Button, Tooltip, Input } from "antd"
-import EditViewLayout from "../EditViewLayout"
+import { itemShape } from "../commonPropTypes"
+import Layout from "./Layout"
 
-const itemShape = PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    completed: PropTypes.bool.isRequired,
-})
-
-EditView.propTypes = {
+EditItemView.propTypes = {
     item: itemShape.isRequired,
     updateItem: PropTypes.func.isRequired,
     setEditMode: PropTypes.func.isRequired,
 }
 
-function EditView({ item, updateItem, setEditMode }) {
+function EditItemView({ item, updateItem, setEditMode }) {
     const [incompleteValue, setIncompleteValue] = useState(item.title)
 
     const noValue = incompleteValue === ""
@@ -65,7 +60,7 @@ function EditView({ item, updateItem, setEditMode }) {
         <Button onClick={() => setEditMode(null)}>Cancel</Button>
     )
 
-    return <EditViewLayout {...{ editInput, saveButton, cancelButton }} />
+    return <Layout {...{ editInput, saveButton, cancelButton }} />
 }
 
-export default EditView
+export default EditItemView

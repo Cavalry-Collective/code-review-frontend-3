@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 
-const defaultViewCheckBoxGroupStyle = {
+const checkBoxGroupStyle = {
     display: "flex",
     padding: "5px",
     width: "calc(100vw - 40px)",
@@ -8,29 +8,29 @@ const defaultViewCheckBoxGroupStyle = {
     overflow: "hidden",
 }
 
-const defaultViewDivStyle = {
+const containerStyle = {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
 }
 
-ToDoItemLayout.propTypes = {
+Layout.propTypes = {
     checkBox: PropTypes.element.isRequired,
     clickableToDoTitle: PropTypes.element.isRequired,
     editToDoButton: PropTypes.element.isRequired,
     deleteToDoButton: PropTypes.element.isRequired,
 }
 
-function ToDoItemLayout({
+function Layout({
     checkBox,
     clickableToDoTitle,
     editToDoButton,
     deleteToDoButton,
 }) {
     return (
-        <div style={defaultViewDivStyle}>
-            <div style={defaultViewCheckBoxGroupStyle}>
+        <div style={containerStyle}>
+            <div style={checkBoxGroupStyle}>
                 {checkBox}
                 {clickableToDoTitle}
             </div>
@@ -42,4 +42,4 @@ function ToDoItemLayout({
     )
 }
 
-export default ToDoItemLayout
+export default Layout

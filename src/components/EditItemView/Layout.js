@@ -5,21 +5,21 @@ const totallyCenteredStyle = {
     justifyContent: "center",
     alignItems: "center",
 }
-const editViewContainerStyle = {
+const containerStyle = {
     ...totallyCenteredStyle,
     width: "100%",
     flexWrap: "wrap",
 }
 
-EditViewLayout.propTypes = {
+Layout.propTypes = {
     editInput: PropTypes.element,
     saveButton: PropTypes.element,
     cancelButton: PropTypes.element,
 }
 
-function EditViewLayout({ editInput, saveButton, cancelButton }) {
+function Layout({ editInput, saveButton, cancelButton }) {
     return (
-        <div style={editViewContainerStyle}>
+        <div style={containerStyle}>
             <div style={{ flex: 1, minWidth: "175px" }}>{editInput}</div>
             <div style={totallyCenteredStyle}>
                 {saveButton}
@@ -29,4 +29,4 @@ function EditViewLayout({ editInput, saveButton, cancelButton }) {
     )
 }
 
-export default EditViewLayout
+export default Layout

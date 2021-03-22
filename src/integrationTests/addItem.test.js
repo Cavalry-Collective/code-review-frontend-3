@@ -7,31 +7,23 @@ import {
 import userEvent from "@testing-library/user-event"
 import App from "../App"
 
-import { sometimesRejects } from "../hooks/utils"
+import { sometimesRejects, wait } from "../hooks/utils"
 jest.mock("../hooks/utils")
-
-global.matchMedia =
-    global.matchMedia ||
-    function () {
-        return {
-            addListener: jest.fn(),
-            removeListener: jest.fn(),
-        }
-    }
 
 const newToDoMessage = "I'm the new todo message"
 test("Add item", async () => {
     sometimesRejects.mockReturnValue({ isRejected: false, errorMessage: null })
+    wait.mockReturnValue(null)
 
     render(<App />)
     await waitFor(() =>
         expect(screen.getByText(/things to do/i)).toBeInTheDocument()
     )
 
-    const inputField = screen.getByRole("textbox", {
-        placeholder: /what do you need to do?/i,
-    })
+    const inputField = screen.getByPlaceholderText(/what do you need to do?/i)
     expect(inputField).toBeInTheDocument()
+    expect(inputField).toHaveAttribute("type", "text")
+    expect(inputField).toHaveAttribute("value", "")
 
     expect(
         screen.queryByRole("button", { name: newToDoMessage })
@@ -39,12 +31,13 @@ test("Add item", async () => {
 
     userEvent.type(inputField, newToDoMessage)
 
-    const filledInputField = screen.getByRole("textbox", {
-        placeholder: /what do you need to do?/i,
-        value: newToDoMessage,
-    })
+    const filledInputField = screen.getByPlaceholderText(
+        /what do you need to do?/i
+    )
 
     expect(filledInputField).toBeInTheDocument()
+    expect(filledInputField).toHaveAttribute("type", "text")
+    expect(filledInputField).toHaveAttribute("value", newToDoMessage)
 
     const addButton = screen.getByRole("button", { name: /add/i })
     expect(addButton).toBeInTheDocument()
@@ -53,9 +46,7 @@ test("Add item", async () => {
     userEvent.click(addButton)
     expect(screen.getByText(/syncing server/i)).toBeInTheDocument()
 
-    await waitForElementToBeRemoved(() => screen.getByText(/syncing server/i), {
-        timeout: 5000,
-    })
+    await waitForElementToBeRemoved(() => screen.getByText(/syncing server/i))
 
     expect(screen.getByText(/request successful!/i)).toBeInTheDocument()
     expect(

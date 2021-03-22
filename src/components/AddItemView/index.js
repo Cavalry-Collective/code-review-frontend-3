@@ -1,18 +1,18 @@
 import { useState } from "react"
 import PropTypes from "prop-types"
-import { Button, Input, Tooltip } from "antd"
-import NewToDoLayout from "../NewToDoLayout"
+import { Button, Input } from "antd"
+import Layout from "./Layout.js"
 import { removeAllNotifications } from "../notifications"
 
 const createId = () => (new Date() / 1).toString()
 
-NewToDoForm.propTypes = {
+AddItemView.propTypes = {
     addItem: PropTypes.func.isRequired,
     setEditMode: PropTypes.func.isRequired,
     setTrashToolTip: PropTypes.func.isRequired,
 }
 
-function NewToDoForm({ addItem, setEditMode, setTrashToolTip }) {
+function AddItemView({ addItem, setEditMode, setTrashToolTip }) {
     const [incompleteValue, setIncompleteValue] = useState("")
 
     const onSubmit = () => {
@@ -32,10 +32,6 @@ function NewToDoForm({ addItem, setEditMode, setTrashToolTip }) {
 
     const disableSubmit = incompleteValue === ""
 
-    const toolTipText = disableSubmit
-        ? "Please enter text before submitting"
-        : "Add a task"
-
     const input = (
         <Input
             rules={[{ required: true, message: "Required" }]}
@@ -50,19 +46,17 @@ function NewToDoForm({ addItem, setEditMode, setTrashToolTip }) {
     )
 
     const submitButton = (
-        <Tooltip title={toolTipText}>
-            <Button
-                type="primary"
-                style={{ margin: "5px" }}
-                onClick={onSubmit}
-                disabled={disableSubmit}
-            >
-                Add
-            </Button>
-        </Tooltip>
+        <Button
+            type="primary"
+            style={{ margin: "5px" }}
+            onClick={onSubmit}
+            disabled={disableSubmit}
+        >
+            Add
+        </Button>
     )
 
-    return <NewToDoLayout {...{ input, submitButton }} />
+    return <Layout {...{ input, submitButton }} />
 }
 
-export default NewToDoForm
+export default AddItemView

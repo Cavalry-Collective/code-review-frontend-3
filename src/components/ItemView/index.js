@@ -1,10 +1,11 @@
 import PropTypes from "prop-types"
 import { List, Checkbox, Tooltip } from "antd"
-import EditView from "../EditView"
-import DeleteToDoButton from "../DeleteToDoButton"
-import EditToDoButton from "../EditToDoButton"
-import ToDoItemLayout from "../ToDoItemLayout"
+import EditItemView from "../EditItemView"
+import DeleteItemButton from "../DeleteItemButton"
+import EditItemButton from "../EditItemButton"
+import Layout from "./Layout"
 import { removeAllNotifications } from "../notifications"
+import { itemShape } from "../commonPropTypes"
 
 const listItemStyle = {
     listStyleType: "none",
@@ -21,13 +22,7 @@ const invisibleButtonStyle = {
     cursor: "pointer",
 }
 
-const itemShape = PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    completed: PropTypes.bool.isRequired,
-})
-
-ToDoListItem.propTypes = {
+ItemView.propTypes = {
     item: itemShape.isRequired,
     updateItem: PropTypes.func.isRequired,
     removeItem: PropTypes.func.isRequired,
@@ -37,7 +32,7 @@ ToDoListItem.propTypes = {
     isTrashToolTipOpen: PropTypes.bool.isRequired,
 }
 
-function ToDoListItem({
+function ItemView({
     item,
     removeItem,
     updateItem,
@@ -77,11 +72,11 @@ function ToDoListItem({
     )
 
     const editToDoButton = (
-        <EditToDoButton {...{ setEditMode, setTrashToolTip, id: item.id }} />
+        <EditItemButton {...{ setEditMode, setTrashToolTip, id: item.id }} />
     )
 
     const deleteToDoButton = (
-        <DeleteToDoButton
+        <DeleteItemButton
             {...{
                 isTrashToolTipOpen,
                 removeItem,
@@ -93,7 +88,7 @@ function ToDoListItem({
     )
 
     const defaultView = (
-        <ToDoItemLayout
+        <Layout
             {...{
                 checkBox,
                 clickableToDoTitle,
@@ -103,7 +98,7 @@ function ToDoListItem({
         />
     )
 
-    const editView = <EditView {...{ item, updateItem, setEditMode }} />
+    const editView = <EditItemView {...{ item, updateItem, setEditMode }} />
 
     return (
         <List.Item style={listItemStyle}>
@@ -112,4 +107,4 @@ function ToDoListItem({
     )
 }
 
-export default ToDoListItem
+export default ItemView

@@ -7,23 +7,15 @@ import {
 import userEvent from "@testing-library/user-event"
 import App from "../App"
 
-import { sometimesRejects } from "../hooks/utils"
+import { sometimesRejects, wait } from "../hooks/utils"
 jest.mock("../hooks/utils")
-
-global.matchMedia =
-    global.matchMedia ||
-    function () {
-        return {
-            addListener: jest.fn(),
-            removeListener: jest.fn(),
-        }
-    }
 
 const newToDoMessage = "I'm the new todo message"
 const updatedToDoMessage = "I'm the updated to do message"
 
-test("Add then Update item", async () => {
+test("Add then update item", async () => {
     sometimesRejects.mockReturnValue({ isRejected: false, errorMessage: null })
+    wait.mockReturnValue(null)
 
     render(<App />)
     await waitFor(() =>
@@ -32,9 +24,7 @@ test("Add then Update item", async () => {
 
     // add one item
 
-    const inputField = screen.getByRole("textbox", {
-        placeholder: /what do you need to do?/i,
-    })
+    const inputField = screen.getByPlaceholderText(/what do you need to do?/i)
 
     userEvent.type(inputField, newToDoMessage)
 
@@ -42,9 +32,7 @@ test("Add then Update item", async () => {
 
     userEvent.click(addButton)
 
-    await waitForElementToBeRemoved(() => screen.getByText(/syncing server/i), {
-        timeout: 5000,
-    })
+    await waitForElementToBeRemoved(() => screen.getByText(/syncing server/i))
 
     const editTaskButton = screen.getByRole("button", { name: /edit/i })
 
@@ -75,9 +63,7 @@ test("Add then Update item", async () => {
 
     userEvent.click(saveButton)
 
-    await waitForElementToBeRemoved(() => screen.getByText(newToDoMessage), {
-        timeout: 5000,
-    })
+    await waitForElementToBeRemoved(() => screen.getByText(newToDoMessage))
 
     expect(screen.getByText(/request successful/i)).toBeInTheDocument()
     expect(screen.getByText(updatedToDoMessage)).toBeInTheDocument()

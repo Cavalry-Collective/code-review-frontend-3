@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react"
-import NewToDoForm from "."
+import AddItemView from "."
 import userEvent from "@testing-library/user-event"
 import { removeAllNotifications } from "../notifications"
 jest.mock("../notifications")
@@ -9,13 +9,13 @@ const addItem = jest.fn()
 const setEditMode = jest.fn()
 const setTrashToolTip = jest.fn()
 
-const newToDoForm = (
-    <NewToDoForm {...{ addItem, setEditMode, setTrashToolTip }} />
+const addItemView = (
+    <AddItemView {...{ addItem, setEditMode, setTrashToolTip }} />
 )
 
-describe("NewToDoForm", () => {
-    test("Clicking the input field will call the necessary callback functions given as prop", () => {
-        render(newToDoForm)
+describe("AddItemView", () => {
+    test("Clicking the input field will call all the expected callbacks", () => {
+        render(addItemView)
         const addButton = screen.getByRole("button", { name: /add/i })
         expect(addButton).toBeInTheDocument()
         expect(addButton).toBeDisabled()
@@ -35,8 +35,8 @@ describe("NewToDoForm", () => {
         expect(addItem).not.toHaveBeenCalled()
     })
 
-    test("Typing and clicking the button will call the necessary callback functions given as prop", () => {
-        render(newToDoForm)
+    test("Typing and clicking the button all the expected callbacks", () => {
+        render(addItemView)
 
         const inputField = screen.getByRole("textbox")
         userEvent.type(inputField, newTitle)

@@ -22,23 +22,23 @@ const cardInnerStyle = {
     margin: "10px",
 }
 
-AppLayout.propTypes = {
-    newToDoForm: PropTypes.element,
-    toDoList: PropTypes.element,
+Layout.propTypes = {
+    addItemView: PropTypes.element.isRequired,
+    itemList: PropTypes.element.isRequired,
 }
 
-function AppLayout({ newToDoForm, toDoList }) {
+function Layout({ addItemView, itemList }) {
     return (
         <div style={appContainerStyle}>
             <Card style={{ width: "95%", margin: "5px" }}>
                 <div style={divInnerStyle}>
                     <h1>Things To Do</h1>
-                    <Card style={cardInnerStyle}>{newToDoForm}</Card>
-                    <Card style={{ width: "100%" }}>{toDoList}</Card>
+                    <Card style={cardInnerStyle}>{addItemView}</Card>
+                    <Card style={{ width: "100%" }}>{itemList}</Card>
                 </div>
             </Card>
         </div>
     )
 }
 
-export default AppLayout
+export default Layout

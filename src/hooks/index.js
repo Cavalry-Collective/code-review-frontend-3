@@ -1,10 +1,6 @@
-import { useState, useEffect, useCallback } from "react"
+import { useEffect, useReducer } from "react"
 import useLocalStorageState from "./useLocalStorageState"
-import { sometimesRejects } from "./utils"
-
-const DELAY = 500
-
-const wait = () => new Promise(resolve => setTimeout(resolve, DELAY))
+import { sometimesRejects, wait } from "./utils"
 
 const mockRemove = (toDoItems, itemId) =>
     toDoItems.filter(item => item.id !== itemId)
@@ -25,7 +21,12 @@ const actionTypes = {
     add: "add",
     remove: "remove",
     update: "update",
+    finish: "finish",
+    reject: "reject",
+    retry: "retry",
+    reset: "reset",
 }
+
 const INITIAL_STATUS = {
     statusType: statusTypes.idle,
     action: null,
@@ -33,9 +34,71 @@ const INITIAL_STATUS = {
     errorMessage: null,
 }
 
+const statusReducer = (previousStatus, action) => {
+    const isToStartAction = [
+        actionTypes.remove,
+        actionTypes.add,
+        actionTypes.update,
+    ].includes(action.type)
+
+    if (isToStartAction) {
+        const loadingParams = {
+            errorMessage: null,
+            statusType: statusTypes.loading,
+            payLoad: action.payLoad,
+            action: action.type,
+        }
+        return loadingParams
+    }
+
+    if (action.type === actionTypes.retry) {
+        return {
+            ...previousStatus,
+            statusType: statusTypes.loading,
+            errorMessage: null,
+        }
+    }
+
+    if (action.type === actionTypes.reset) {
+        return INITIAL_STATUS
+    }
+
+    if (action.type === actionTypes.finish) {
+        return {
+            ...previousStatus,
+            errorMessage: null,
+            statusType: statusTypes.success,
+        }
+    }
+
+    if (action.type === actionTypes.reject) {
+        return {
+            ...previousStatus,
+            statusType: statusTypes.error,
+            errorMessage: action.payLoad.errorMessage,
+        }
+    }
+
+    throw new Error(`Unhandle actionType: ${action}`)
+}
+
+const fulfillRequest = (status, setItems) => {
+    const { action, payLoad } = status
+
+    if (action === actionTypes.remove) {
+        setItems(items => mockRemove(items, payLoad.itemId))
+    } else if (action === actionTypes.add) {
+        setItems(items => mockAdd(items, payLoad.item))
+    } else if (action === actionTypes.update) {
+        setItems(items => mockUpdate(items, payLoad.item))
+    } else {
+        throw new Error(`Unhandle actionType: ${action}`)
+    }
+}
+
 function useMockFetchToDo() {
     const [toDoItems, setToDoItems] = useLocalStorageState("toDoList", [])
-    const [status, setStatus] = useState(INITIAL_STATUS)
+    const [status, statusDispatch] = useReducer(statusReducer, INITIAL_STATUS)
 
     useEffect(() => {
         if (status.statusType !== statusTypes.loading) {
@@ -47,88 +110,39 @@ function useMockFetchToDo() {
 
             const { isRejected, errorMessage } = sometimesRejects()
             if (isRejected) {
-                // prettier-ignore
-                setStatus({ ...status, statusType: statusTypes.error, errorMessage })
+                statusDispatch({
+                    type: actionTypes.reject,
+                    payLoad: { errorMessage },
+                })
                 return
             }
 
-            const { action, payLoad } = status
-
-            if (action === actionTypes.remove) {
-                setToDoItems(toDoItems => mockRemove(toDoItems, payLoad.itemId))
-            } else if (action === actionTypes.add) {
-                setToDoItems(toDoItems => mockAdd(toDoItems, payLoad.item))
-            } else if (action === actionTypes.update) {
-                setToDoItems(toDoItems => mockUpdate(toDoItems, payLoad.item))
-            } else {
-                throw new Error(`Unhandle actionType: ${action}`)
-            }
-
-            // prettier-ignore
-            setStatus({ ...status, errorMessage: null, statusType: statusTypes.success })
+            fulfillRequest(status, setToDoItems)
+            statusDispatch({ type: actionTypes.finish })
         }
 
         doAction()
-    }, [status, setStatus, setToDoItems])
+    }, [status, statusDispatch, setToDoItems])
 
-    const removeItem = itemId => {
-        setStatus({
-            errorMessage: null,
-            statusType: statusTypes.loading,
-            action: actionTypes.remove,
-            payLoad: { itemId },
-        })
-    }
+    const removeItem = itemId =>
+        statusDispatch({ type: actionTypes.remove, payLoad: { itemId } })
 
-    const addItem = useCallback(
-        item => {
-            setStatus({
-                errorMessage: null,
-                statusType: statusTypes.loading,
-                action: actionTypes.add,
-                payLoad: { item },
-            })
-        },
-        [setStatus]
-    )
+    const addItem = item =>
+        statusDispatch({ type: actionTypes.add, payLoad: { item } })
 
-    const updateItem = useCallback(
-        item => {
-            setStatus({
-                errorMessage: null,
-                statusType: statusTypes.loading,
-                action: actionTypes.update,
-                payLoad: { item },
-            })
-        },
-        [setStatus]
-    )
+    const updateItem = item =>
+        statusDispatch({ type: actionTypes.update, payLoad: { item } })
 
-    const retry = useCallback(() => {
-        setStatus({
-            ...status,
-            statusType: statusTypes.loading,
-            errorMessage: null,
-        })
-    }, [status, setStatus])
+    const retry = () => statusDispatch({ type: actionTypes.retry })
 
-    const reset = useCallback(() => {
-        setStatus(INITIAL_STATUS)
-    }, [setStatus])
+    const reset = () => statusDispatch({ type: actionTypes.reset })
 
     const { statusType, errorMessage } = status
     return [
         toDoItems,
         { updateItem, addItem, removeItem, reset, retry },
-        {
-            isLoading: statusType === statusTypes.loading,
-            isSuccess: statusType === statusTypes.success,
-            isError: statusType === statusTypes.error,
-            isIdle: statusType === statusTypes.idle,
-            errorMessage: errorMessage,
-            statusType,
-        },
+        { errorMessage, statusType },
     ]
 }
 
-export { useLocalStorageState, useMockFetchToDo }
+export { useLocalStorageState, useMockFetchToDo, statusTypes }

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import ToDoListItem from "."
+import ItemView from "."
 import { removeAllNotifications } from "../notifications"
 jest.mock("../notifications")
 
@@ -16,7 +16,7 @@ const setEditMode = jest.fn()
 const setTrashToolTip = jest.fn()
 
 const viewModeToDoItemTrashToolTipClosed = (
-    <ToDoListItem
+    <ItemView
         {...{
             item,
             removeItem,
@@ -30,7 +30,7 @@ const viewModeToDoItemTrashToolTipClosed = (
 )
 
 const viewModeToDoItemTrashToolTipOpen = (
-    <ToDoListItem
+    <ItemView
         {...{
             item,
             removeItem,
@@ -44,7 +44,7 @@ const viewModeToDoItemTrashToolTipOpen = (
 )
 
 const editModeToDoItem = (
-    <ToDoListItem
+    <ItemView
         {...{
             item,
             removeItem,
@@ -57,7 +57,7 @@ const editModeToDoItem = (
     />
 )
 
-describe("ToDoListItem", () => {
+describe("ItemView", () => {
     test("Render the expected html elements when in edit mode and nothing more", () => {
         render(editModeToDoItem)
 
@@ -84,9 +84,7 @@ describe("ToDoListItem", () => {
         const editButton = screen.queryByRole("button", { name: /edit/i })
         expect(editButton).not.toBeInTheDocument()
 
-        const trashToolTip = screen.queryByRole("tooltip", {
-            title: "Are you sure you want to delete this item?",
-        })
+        const trashToolTip = screen.queryByRole("tooltip")
         expect(trashToolTip).not.toBeInTheDocument()
     })
 
@@ -109,9 +107,7 @@ describe("ToDoListItem", () => {
         })
         expect(deleteButton).toBeInTheDocument()
 
-        const trashToolTip = screen.getByRole("tooltip", {
-            title: "Are you sure you want to delete this item?",
-        })
+        const trashToolTip = screen.getByRole("tooltip")
         expect(trashToolTip).toBeInTheDocument()
 
         const inputField = screen.queryByRole("textbox")
@@ -138,9 +134,7 @@ describe("ToDoListItem", () => {
         const deleteButton = screen.getByRole("button", { name: /delete/i })
         expect(deleteButton).toBeInTheDocument()
 
-        const trashToolTip = screen.queryByRole("tooltip", {
-            title: "Are you sure you want to delete this item?",
-        })
+        const trashToolTip = screen.queryByRole("tooltip")
 
         expect(trashToolTip).not.toBeInTheDocument()
 

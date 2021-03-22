@@ -1,6 +1,7 @@
 version: "2" # required to adjust maintainability checks
 exclude_patterns:
-    - "tests/*"
+    - "integrationTests/"
+    - "**/*unit.test.js"
 
 checks:
     argument-count:
@@ -11,22 +12,22 @@ checks:
             threshold: 5
     file-lines:
         config:
-            threshold: 250
+            threshold: 180
     method-complexity:
         config:
             threshold: 6
     method-count:
         config:
-            threshold: 20
+            threshold: 18
     method-lines:
         config:
-            threshold: 30
+            threshold: 40
     nested-control-flow:
         config:
             threshold: 4
     return-statements:
         config:
-            threshold: 5
+            threshold: 6
     similar-code:
         config:
             threshold: # language-specific defaults. an override will affect all languages.
